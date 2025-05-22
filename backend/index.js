@@ -9,6 +9,7 @@ import { MongoClient, ServerApiVersion } from "mongodb";
 /* import { insertDocument } from "./crud-mongo.js"; */
 import cookieParser from "cookie-parser";
 import { configDotenv } from 'dotenv';
+import mongoose from 'mongoose';
 
 configDotenv()
 const app =  express()
@@ -34,7 +35,9 @@ const client = new MongoClient(process.env.URI, {
     serverApi:{
         version:ServerApiVersion.v1,
         strict:true,
-        deprecationErrors:true
+        deprecationErrors:true,
+        tls:true,
+        tlsAllowInvalidCertificates:false
     }
 })
 
