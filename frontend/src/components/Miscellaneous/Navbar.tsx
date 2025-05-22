@@ -79,30 +79,27 @@ interface ActiveLinkTypes{
 
 
 function generateNavItemContent(link: keyof ActiveLinkTypes, navClosed: boolean, activeLink: ActiveLinkTypes): JSX.Element{
-    let navItemIcon: JSX.Element;
     
-    switch (link) {
+    const getLinkIcon = () => {
+        switch (link) {
         case 'dashboard':
-            navItemIcon = <DashboardIcon className="nav-li-item-icon-padding"/>
-            break
+            return <DashboardIcon className="nav-li-item-icon-padding"/>
         case 'diary':
-            navItemIcon = <MenuBookIcon className="nav-li-item-icon-padding"/>
-            break
+            return <MenuBookIcon className="nav-li-item-icon-padding"/> 
         case 'report':
-            navItemIcon = <InsertChartIcon className="nav-li-item-icon-padding"/>
-            break
+            return <InsertChartIcon className="nav-li-item-icon-padding"/>
         case 'settings':
-            navItemIcon = <Settings className="nav-li-item-icon-padding"/>
-            break
+            return <Settings className="nav-li-item-icon-padding"/>
         default:
             break;
+    }
     }
 
     return <Navitem extraClass={`${navClosed && 'mb-20'}`}>
              <Link className={`${activeLink[link]  && 'active-nav-li-item'} nav-li-item`} 
                    to={link}
              > 
-                {navItemIcon}
+                {getLinkIcon()}
                 <span className={`nav-li-name ${navClosed && 'nav-li-name-toggled'}`}>
                     {link[0].toUpperCase()+link.slice(1)}
                 </span>

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Navitem from "./Navitem"
-import { DropdownInfo } from "../Navbar"
+import { DropdownInfo } from "./Navbar";
 import { Link } from "react-router"
 import LocalDiningIcon from '@mui/icons-material/LocalDining';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';

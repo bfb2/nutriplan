@@ -4,17 +4,17 @@ import Input from "../Miscellaneous/Input"
 import { AddCircle } from "@mui/icons-material"
 import { useState } from "react"
 import SearchFood from "../Miscellaneous/Modal/SearchFood"
-import { CustomFood, DBEntry, Meals } from "../../types/types"
+import { DBEntry, LinkedCustomItem, Meals } from "../../types/types"
 import { NutritionSumTotal } from "../../classes"
 import DisplayItems from "../Miscellaneous/DisplayItems"
-import { addEntryToDB, hideCustomItem, linkCustomItem, retrieveItemByID } from "../../functions/indexdb"
+import { addEntryToDB, linkCustomItem } from "../../functions/indexdb"
 import { checkForCircularReference, generateID, isUserLoggedIn, linkRecipesAndMeals, saveToMongo, updateReference } from "../../functions/general-use"
 import ErrorMessage from "../Miscellaneous/ErrorMessage"
 
 import useCustomItemError from "../../hooks/useCustomItemError"
 
 const Meal = () =>{
-    type CreateMeal = {[P in keyof Meals] : P extends 'mealItems' ? DBEntry[] : P extends 'referencedBy' ? Meals[P] & {referencedItems:(string|number)[]} : Meals[P]}
+    type CreateMeal = {[P in keyof Meals] : P extends 'mealItems' ? (DBEntry|LinkedCustomItem)[] : P extends 'referencedBy' ? Meals[P] & {referencedItems:(string|number)[]} : Meals[P]}
     const [errorMsg, setErrorMsg] = useState('')
     const [modalActive, setModalActive] = useState(false)
     
@@ -114,7 +114,7 @@ const Meal = () =>{
     
 
     const [displaySave, setDisplaySave] = useState(false)
-    const {mealName, mealItems, key} = mealDetails
+    const {mealName, mealItems} = mealDetails
     const overallNutrition = new NutritionSumTotal(mealItems).nutrition
     
     return <>

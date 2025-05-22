@@ -62,10 +62,10 @@ const options:ChartOptions<'doughnut'> = {
 
   
 
-const findPercentage = (array:number[], numToDivideBy:number) :number => {
+/* const findPercentage = (array:number[], numToDivideBy:number) :number => {
     const sum =array.reduce((accumulator, currentVal) => accumulator + currentVal, 0)
     return Math.round((numToDivideBy/sum)*100)    
-}
+} */
 
 interface PropTypes {
     title?:string;

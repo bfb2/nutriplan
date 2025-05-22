@@ -1,14 +1,13 @@
 import Navbar from "../Miscellaneous/Navbar"
 import { Outlet } from "react-router"
 import Topbar from '../Miscellaneous/Topbar'
-import { useNavigate, useLocation } from "react-router"
 import ErrorMessage from "../Miscellaneous/ErrorMessage"
 import { useEffect, useState } from "react"
 import { isUserLoggedIn } from "../../functions/general-use"
 
 export default function Root(){
-    const navigate = useNavigate()
-    const location = useLocation().pathname
+   /*  const navigate = useNavigate()
+    const location = useLocation().pathname */
 
 
     

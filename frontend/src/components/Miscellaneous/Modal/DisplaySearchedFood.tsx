@@ -8,11 +8,11 @@ import Dropdown from "../Dropdown"
 import Input from "../Input"
 import { getDifferentServingSizes } from "../../../functions/api"
 import MacroValues from "../MacroValues"
-import { isRecipes, isMeals, isFoods, isDBEntrySavedItem, isDBEntry, isRecipe, isLinkedCustomItem, parseLinkedItems } from "../../../functions/general-use"
-import { linkCustomItem, retrieveItemByID } from "../../../functions/indexdb"
+import { isRecipes, isMeals, isFoods,} from "../../../functions/general-use"
+import { linkCustomItem } from "../../../functions/indexdb"
 import { NutritionSumTotal } from "../../../classes"
 
-const DisplaySearchedFood = ({results, activeCategory, tableKey, saveFoodFunc, addItemBtnText}:PropsTypes ) => {
+const DisplaySearchedFood = ({results, tableKey, saveFoodFunc, addItemBtnText}:PropsTypes ) => {
     const [selectedItem, setSelectedItem] = useState<FoodItem>({
         name:'',
         nutrients:[],
@@ -109,7 +109,7 @@ const DisplaySearchedFood = ({results, activeCategory, tableKey, saveFoodFunc, a
                })
             }
             else if(isMeals(results)){
-                results.forEach((item,index) => {
+                results.forEach((item) => {
                     tableContent.push([item.mealName])
                     /* const nutrients = item.mealItems.flatMap(({nutrients}) => nutrients)
                     const macros = getMacroValues(nutrients) */
@@ -149,7 +149,7 @@ const DisplaySearchedFood = ({results, activeCategory, tableKey, saveFoodFunc, a
                 })
             }
             else if(isFoods(results)){
-                results.forEach((item, index) => {
+                results.forEach((item) => {
                     tableContent.push([item.foodName])
                     
                     const nutrients = item.nutrients
@@ -180,11 +180,11 @@ const DisplaySearchedFood = ({results, activeCategory, tableKey, saveFoodFunc, a
         }
     }, [results])
     
-    const updateSelectedQty = (evt : React.KeyboardEvent<HTMLInputElement>) => {
-        const input = evt.target as HTMLInputElement
-        const qtyInput = parseFloat(input.value)
+    const updateSelectedQty = (evt : React.ChangeEvent<HTMLInputElement>) => {
+        const input = evt.target.value
+        //const qtyInput = parseFloat(input.value)
         if(!isNaN(qtyInput))
-            setSelectedItem(prev => ({...prev, serving:{...prev.serving, qtyInput:qtyInput}}))
+            setSelectedItem(prev => ({...prev, serving:{...prev.serving, qtyInput:Number(input)}}))
     }
 
     const {macros:{energy, carbohydrates, fat, protein}, serving:{weightSelected, servingWeights, qtyInput, qtyDefaults}, startingWeight} = selectedItem
@@ -196,7 +196,7 @@ const DisplaySearchedFood = ({results, activeCategory, tableKey, saveFoodFunc, a
     const fatValue = fat * weightRatio * quantityRatio
 
     const prepareNutritionDataForDB = () => {
-        const {name:foodName,nutrients, startingWeight, serving:{qtyInput, weightSelected, qtyDefaults, servingWeights, unit}, key } = selectedItem
+        const {name:foodName,nutrients, serving:{qtyInput, weightSelected, servingWeights, unit}, key } = selectedItem
 
         const adjustedNutrientValues = Array.isArray(nutrients) ? 
             nutrients.map(nutrient => ({...nutrient, value: nutrient.value* weightRatio * quantityRatio}))
@@ -310,7 +310,6 @@ const getMacroValues = (nutrients:CommonFoodsType['full_nutrients']) =>{
 
 interface PropsTypes{
     results:APIResponseFoods | [] | CustomFood[] | SavedRecipe[]| Meals[]; 
-    activeCategory:string; 
     tableKey:string;
     saveFoodFunc: (data: DBEntry) => void;
     addItemBtnText:string

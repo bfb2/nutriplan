@@ -11,7 +11,7 @@ const SignUp = () =>{
     const submitSignUpData = (event:React.FormEvent<HTMLFormElement>) =>{
         event.preventDefault();
         const formInputs = {name:'a username', password:'a password', confirmedPassword:'your confirm password'};
-        const isWhitespaceString = str => !str.replace(/\s/g, '').length
+        const isWhitespaceString = (str:string) => !str.replace(/\s/g, '').length
 
         const formData = new FormData(event.target as HTMLFormElement)
         const formObject = Object.fromEntries(formData.entries())

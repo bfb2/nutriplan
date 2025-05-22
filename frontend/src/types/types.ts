@@ -157,7 +157,7 @@ export interface LinkedRecipes extends Recipes{
 }
 
 export interface CreateRecipeState extends Recipes{
-    ingredients:DBEntry[];
+    ingredients:(DBEntry|LinkedCustomItem)[];
     defaultValue:number;
     referencedBy:CustomReferences & {referencedItems:(string|number)[]}
 }
@@ -290,7 +290,5 @@ export interface TrackedNutrients{
     minerals : Minerals;
     vitamins : Vitamins 
 }
-
-type NutrientTables = 'general'|'carbohydrates'|'fat'|'protein'|'protein'|'minerals'|'vitamins'
 
 export type Nutrients = keyof General | keyof Protein | keyof Carbs | keyof Fat | keyof Minerals | keyof Vitamins

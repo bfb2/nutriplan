@@ -9,7 +9,7 @@ const Input = ({onInput, placeholder, extraClass, defaultValue, onBlur, autoFocu
 
 interface PropTypes{
     onInput?:React.KeyboardEventHandler<HTMLInputElement>;
-    placeholder?:string|number;
+    placeholder?:string;
     extraClass?:string;
     defaultValue?: string|number;
     onBlur?: React.FocusEventHandler<HTMLInputElement>;
@@ -18,6 +18,6 @@ interface PropTypes{
     onFocus?:React.FocusEventHandler<HTMLInputElement>;
     type?:React.HTMLInputTypeAttribute;
     value?:string|number;
-    onChange?:React.KeyboardEventHandler<HTMLInputElement>
+    onChange?:React.ChangeEventHandler<HTMLInputElement>
 }
  export default Input

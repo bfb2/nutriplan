@@ -60,7 +60,7 @@ const SearchFood = ({saveFoodFunc, modalName, toggleModalFunc, addItemBtnText}:P
                      onClick={()=>setActiveBtn('meals')}
                 />
             </div>
-            <DisplaySearchedFood results={query.results[activeBtn]} activeCategory={activeBtn} tableKey={activeBtn+query.query} saveFoodFunc={saveFoodFunc} addItemBtnText={addItemBtnText}/>
+            <DisplaySearchedFood results={query.results[activeBtn]} tableKey={activeBtn+query.query} saveFoodFunc={saveFoodFunc} addItemBtnText={addItemBtnText}/>
         </>
     </Modal>
 } 

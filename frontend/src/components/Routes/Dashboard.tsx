@@ -1,8 +1,7 @@
 import NutrientConsumption from "../Dashboard/NutrientConsumption"
-import { accessDisplayedDashboardNutrients } from "../../functions/general-use"
+import { accessDisplayedDashboardNutrients, isReturnedDiaryEntries } from "../../functions/general-use"
 import { Nutrients, TrackedNutrients } from "../../types/types"
 import useSavedData from "../../hooks/useSavedData"
-import { isDiaryEntries } from "../../functions/general-use"
 import { NutritionSumTotal } from "../../classes"
 
 export default function Dashboard(){
@@ -23,7 +22,7 @@ export default function Dashboard(){
 
     const weekOfNutrition: (TrackedNutrients|number)[] = [0, 0 ,0 ,0,0,0,0]
 
-    if(savedData && isDiaryEntries(savedData)){
+    if(savedData && isReturnedDiaryEntries(savedData)){
         savedData.data.forEach(diaryEntry => last7Days.forEach((day, index) => {
             if(diaryEntry.date == day){
                 weekOfNutrition[index] = new NutritionSumTotal(diaryEntry).nutrition

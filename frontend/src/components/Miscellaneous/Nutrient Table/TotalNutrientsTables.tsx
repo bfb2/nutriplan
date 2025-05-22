@@ -4,8 +4,6 @@ import { nutrientsNameAndLabel } from "../../../constants"
 import { Nutrients } from "../../../types/types"
 import { accessNutrientGoals } from "../../../functions/general-use"
 import Input from "../Input"
-import { DiaryEntries, DiaryEntry } from "../../../types/types"
-import { NutritionSumTotal } from "../../../classes"
 
 interface PropTypes{
     totalNutrients: TrackedNutrients; 

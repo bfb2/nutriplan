@@ -5,13 +5,27 @@ import { hideCustomItem } from "../functions/indexdb"
 import Modal from "../components/Miscellaneous/Modal/Modal"
 import { CustomFood, UserDefinedItems } from "../types/types"
 
-const useCustomItemError = (customItemReferences:CustomFood['referencedBy'], circleReferenceErrorMsg?:string) => {
+interface ReturnedItems{
+    ItemUsedOtherPlacesModal:() => false | JSX.Element, 
+    setLoopError:() => void, 
+    alertItemInUse: (newItemAdded: boolean, saveItemToDb: (id?: string) => void, changeIdState: (id: string) => void, itemID: string, db: UserDefinedItems) 
+        => Promise<void> | undefined
+}
+
+interface ReturnedItemsWErrorMsg extends ReturnedItems{
+    CircleReferenceError: () => false | JSX.Element
+}
+
+function useCustomItemError(customItemReferences:CustomFood['referencedBy']) : ReturnedItems 
+function useCustomItemError(customItemReferences:CustomFood['referencedBy'], CircleReferenceErrorMsg:string): ReturnedItemsWErrorMsg
+function useCustomItemError(customItemReferences:CustomFood['referencedBy'], CircleReferenceErrorMsg?:string): ReturnedItemsWErrorMsg|ReturnedItems
+{
     const [errorModal, setErrorModal] = useState({loop:false, inUse:false})
     const setLoopError = () => setErrorModal(prev => ({...prev, loop:true}))
     const [resolver, setResolver] = useState<(value: boolean) => void>()
 
     const CircleReferenceError = () => errorModal.loop && 
-        <ErrorModal errorMsg={circleReferenceErrorMsg} closeModal={()=> setErrorModal(prev => ({...prev, loop:false}))}/>
+        <ErrorModal errorMsg={CircleReferenceErrorMsg || ''} closeModal={()=> setErrorModal(prev => ({...prev, loop:false}))}/>
     
     const ItemUsedOtherPlacesModal = () => errorModal.inUse &&
         <Modal smallModal={true} toggleStateFunction={()=>setErrorModal(prev => ({...prev, inUse:false}))} modalTitle="Update old entries">
@@ -50,7 +64,7 @@ const useCustomItemError = (customItemReferences:CustomFood['referencedBy'], cir
             saveItemToDb()
     }
 
-    return {CircleReferenceError, ItemUsedOtherPlacesModal, setLoopError, alertItemInUse}
+    return {...(CircleReferenceErrorMsg && {CircleReferenceError}), ItemUsedOtherPlacesModal, setLoopError, alertItemInUse}
 }
 
 const generateLiReferences = (references:CustomFood['referencedBy']) =>{

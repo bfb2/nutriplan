@@ -3,7 +3,7 @@ import { useState } from "react";
 import MacroTracker from "../Miscellaneous/Chart/MacroTracker";
 import useSavedData from "../../hooks/useSavedData";
 import TotalNutrientsTables from "../Miscellaneous/Nutrient Table/TotalNutrientsTables";
-import { isDiaryEntries } from "../../functions/general-use";
+import {isReturnedDiaryEntries } from "../../functions/general-use";
 
 
 export default function Report(){
@@ -28,7 +28,7 @@ export default function Report(){
     }
     const {totalNutrients, nonEmptyDays, savedData} = useSavedData(typeof(numOfDays) == 'object' ? numOfDays[0] : numOfDays)
     if(savedData !== undefined && Array.isArray(numOfDays)){
-        if(isDiaryEntries(savedData)){
+        if(isReturnedDiaryEntries(savedData)){
             const [firstEntryDate, lastEntryDate] = savedData.dateRange.split(' - ')
             const days = (new Date(lastEntryDate).valueOf() - new Date(firstEntryDate).valueOf())/86400000
             if(numOfDays[1] !== days && dayRange !== savedData.dateRange){

@@ -1,8 +1,7 @@
 import { AddCircle, ArrowBack } from "@mui/icons-material"
 import { useState, useEffect} from "react";
 import NutritionOverview from "./Nutrient Table/NutritionOverview";
-import { DBEntry, Meals, UserDefinedItems, SavedRecipe, TrackedNutrients, CustomFood } from "../../types/types";
-import { NutritionSumTotal } from "../../classes";
+import { Meals, UserDefinedItems, SavedRecipe, TrackedNutrients, CustomFood } from "../../types/types";
 import TotalNutrientsTables from "./Nutrient Table/TotalNutrientsTables";
 import SavedItems from "./SavedItems";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -15,7 +14,19 @@ const CustomItemsLanding = ({heading, headingSubtext, enterEditModeText, childre
 
     const [displayDropdown, setDisplayDropdown] = useState(false)
     useEffect(()=>{
-        retrieveUserDefinedItems(db, itemID).then(item => item == undefined ? setDisplayDropdown(false):setDisplayDropdown(true))
+        switch (db) {
+            case "recipe":
+                retrieveUserDefinedItems(db, itemID).then(item => item == undefined ? setDisplayDropdown(false):setDisplayDropdown(true))
+                break;
+            case 'food':
+                retrieveUserDefinedItems(db, itemID).then(item => item == undefined ? setDisplayDropdown(false):setDisplayDropdown(true))
+                break
+            case 'meal':
+                retrieveUserDefinedItems(db, itemID).then(item => item == undefined ? setDisplayDropdown(false):setDisplayDropdown(true))
+                break
+            default:
+                break;
+        }
     }, [itemID, db])
     
     const {protein:{protein}, carbohydrates:{carbohydrates:carbs},general:{energy:calories}, fat:{fat} } = nutritionData

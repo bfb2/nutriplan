@@ -14,9 +14,11 @@ import { nutrientTables, nutrientsNameAndLabel } from '../../constants';
 
 
 
-const NutrientConsumption = ({color, nutrient, nutritionData, last7Days}:{ color:string, nutrient:Nutrients, nutritionData:(TrackedNutrients|number)[], last7Days:string[]}) =>{  
+const NutrientConsumption = ({ nutrient, nutritionData, last7Days}:{ nutrient:Nutrients, nutritionData:(TrackedNutrients|number)[], last7Days:string[]}) =>{  
     const nutrientGroup = nutrientTables.get(nutrient)
-
+    const nutrientTable = nutrientTables.get(nutrient)
+    const nutrientInfo = nutrientsNameAndLabel[nutrientTable as keyof TrackedNutrients]
+    const nutrientLabel = nutrientInfo[nutrient as keyof typeof nutrientInfo]
     const pastWeekNutrientInfo = nutritionData.map(data => {
       if(typeof(data) == 'number')
         return data
@@ -47,7 +49,7 @@ const NutrientConsumption = ({color, nutrient, nutritionData, last7Days}:{ color
         },
         title: {
           display: true,
-          text: `${(nutrient as string)[0].toLocaleUpperCase()+nutrient.slice(1)} Consumption (${nutrientsNameAndLabel[nutrientTables.get(nutrient)][nutrient].measureLabel})`,
+          text: `${(nutrient as string)[0].toLocaleUpperCase()+nutrient.slice(1)} Consumption (${nutrientLabel['measureLabel']})`,
         },
       },
     };

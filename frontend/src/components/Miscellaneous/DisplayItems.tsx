@@ -1,5 +1,5 @@
-import { isDBEntrySavedItem, isLinkedCustomItem, isLinkedMeal, isRecipe, updateSingleReference } from "../../functions/general-use"
-import { DBEntry, DBEntrySavedItem, LinkedCustomItem } from "../../types/types"
+import { isLinkedCustomItem, isLinkedMeal, isRecipe, updateSingleReference } from "../../functions/general-use"
+import { DBEntry, LinkedCustomItem } from "../../types/types"
 import Table from "./Nutrient Table/Table"
 import { Cancel } from "@mui/icons-material"
 
@@ -22,7 +22,7 @@ const DisplayItems = ({items, removeItemFunc, referencedBy}:{items:(DBEntry|Link
     })
 
     return items.length > 0 && <Table titles={['Name', 'Amount', 'Unit', "",'Weight (g)', ' ']}  addedTableClasses={{rowClass:'disp-items'}}
-        contents={content}/>
+        contents={content as (string | number | JSX.Element)[][]}/>
 } 
 
  export default DisplayItems

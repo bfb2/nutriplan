@@ -1,13 +1,12 @@
 import { RestaurantMenu, ExpandMore, Cancel } from "@mui/icons-material"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import SearchFood from "../Miscellaneous/Modal/SearchFood"
-import { addEntryToDB,removeDiaryItem, retrieveItemByID } from "../../functions/indexdb"
-import { DBEntry, DiaryEntry, DiaryEntries, ReturnedDiaryEntries, ReturnedDiaryEntry } from "../../types/types"
+import { addEntryToDB,removeDiaryItem} from "../../functions/indexdb"
+import { DBEntry, ReturnedDiaryEntry } from "../../types/types"
 import Table from "../Miscellaneous/Nutrient Table/Table"
-import { getCookieValue, isDBEntrySavedItem, isRecipe, isUserLoggedIn, isMeal, isLinkedCustomItem, isLinkedMeal, linkRecipesAndMeals, updateReference, updateSingleReference } from "../../functions/general-use"
+import { getCookieValue, isRecipe, isUserLoggedIn, isLinkedCustomItem, isLinkedMeal, linkRecipesAndMeals, updateReference, updateSingleReference } from "../../functions/general-use"
 
 interface PropsTypes{
-    updateDiary:React.Dispatch<React.SetStateAction<DiaryEntry | DiaryEntries | undefined>>;
     day:Date; 
     diaryEntries: ReturnedDiaryEntry | undefined; 
     refreshDiary: (indexKey: string) => Promise<void>
@@ -68,7 +67,7 @@ const AddToDiary = ({day, diaryEntries, refreshDiary}:PropsTypes) =>{
                     <ExpandMore style={{color:'#005c5c'}} />
                 </div>
             </div>
-            { dropddownToggled && diaryEntries !== undefined && <Table addedTableClasses={{rowClass:'diary-items'}} contents={generateDiaryItems(diaryEntries)}/> }            
+            { dropddownToggled && diaryEntries !== undefined && <Table addedTableClasses={{rowClass:'diary-items'}} contents={generateDiaryItems(diaryEntries) as (string | number | JSX.Element)[][]}/> }            
         </section>
 
         {modalActive && <SearchFood saveFoodFunc={addDiaryEntryToDB} modalName="Add Food To Diary" toggleModalFunc={setModalActive} addItemBtnText="Add To Diary"/>}

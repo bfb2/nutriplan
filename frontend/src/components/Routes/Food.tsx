@@ -31,7 +31,7 @@ const Food = () =>{
     if(foodDetails.id == '')
             generateID().then(id=>setFoodDetails(prev => ({...prev, id})))
     const resetState = () => setFoodDetails({foodName:'New Food', servingDetails:{grams:1, quantity:1, measure:'Serving'}, nutrients:new NutritionSumTotal().nutrition, notes:'', id:'', referencedBy:{diary:0,recipes:0,meals:0}})
-    const {foodName, servingDetails:{grams, quantity, measure}, nutrients, id, referencedBy:{diary, recipes, meals}} = foodDetails
+    const {foodName, servingDetails:{grams, quantity, measure}, nutrients, referencedBy:{diary, recipes, meals}} = foodDetails
     const {ItemUsedOtherPlacesModal, alertItemInUse} = useCustomItemError(foodDetails.referencedBy)
 
     const [displaySave, setDisplaySave] = useState(false)
@@ -67,7 +67,7 @@ const Food = () =>{
         const formData = new FormData(event.target as HTMLFormElement)
         const formObject = Object.fromEntries(formData.entries())
         const {foodName, notes, quantity, measure, grams} = formObject as {foodName:string, notes:string, quantity:string, measure:string, grams:string}
-        const data:CustomFood ={...foodDetails, foodName, notes, servingDetails:{quantity, measure, grams}, ...(newID && {id:newID})}
+        const data:CustomFood ={...foodDetails, foodName, notes, servingDetails:{quantity:Number(quantity), measure, grams:Number(grams)}, ...(newID && {id:newID})}
         if(isUserLoggedIn())
             saveToMongo({data, itemType:'food'})
         addEntryToDB('food', data, data.id)

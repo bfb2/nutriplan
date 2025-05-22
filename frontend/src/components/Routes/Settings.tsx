@@ -2,7 +2,7 @@ import { TrackedNutrients } from "../../types/types"
 import Input from "../Miscellaneous/Input"
 import { Nutrients } from "../../types/types"
 import { general, protein, vitamins, minerals, carbs, fat } from "../../constants"
-import { updateDailyLimits, accessNutrientGoals, accessDisplayedDashboardNutrients, isUserLoggedIn, getCookieValue } from "../../functions/general-use"
+import { updateDailyLimits, accessNutrientGoals, accessDisplayedDashboardNutrients, isUserLoggedIn } from "../../functions/general-use"
 import SettingsTable from "../Settings/SettingsTable"
 
 const Settings = () =>{

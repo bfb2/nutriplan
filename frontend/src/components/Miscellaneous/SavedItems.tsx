@@ -2,12 +2,18 @@ import { useState, useEffect } from "react"
 import SearchBar from "./Input"
 import TableRow from "./Nutrient Table/TableRow"
 import { retrieveUserDefinedItems } from "../../functions/indexdb"
-import { SavedRecipe, UserDefinedItems, Meals, CustomFood, CustomItemIndexDB, CustomItem, SavedRecipeDB, SavedMealDB, SavedFoodDB } from "../../types/types"
+import { SavedRecipe, UserDefinedItems, Meals, CustomFood, CustomItemIndexDB, SavedRecipeDB, SavedMealDB, SavedFoodDB } from "../../types/types"
 
 const SavedItems = ({getItemsInfo,searchBarPlaceholder,ifEmptyMessage, db}:PropTypes) =>{
     useEffect(() => {
         const loadDBValues = async () => {
-            const values = await retrieveUserDefinedItems(db)
+            let values
+            if(db == 'food')
+                values = await retrieveUserDefinedItems('food')
+            else if(db == 'recipe')
+                values = await retrieveUserDefinedItems('recipe')
+            else
+                values = await retrieveUserDefinedItems('meal')
             
             setSavedItems({data:values, search:values})
         }

@@ -1,9 +1,9 @@
-import { TrackedNutrients, DiaryEntry, DBEntry, DiaryEntries, DBEntrySavedItem, Nutrients, ReturnedDiaryEntry, ReturnedDiaryEntries, LinkedCustomItem } from "./types/types"
+import { TrackedNutrients, DBEntry, ReturnedDiaryEntry, ReturnedDiaryEntries, LinkedCustomItem, CommonFoodsType } from "./types/types"
 import nutrientIds, {nutrientTables} from "./constants"
 import { isLinkedMeal, isReturnedDiaryEntries, isReturnedDiaryEntry } from "./functions/general-use"
 
 import {  isRecipe,isLinkedCustomItem } from "./functions/general-use"
-import { isArray } from "chart.js/helpers"
+
 
 export class NutritionSumTotal{
     nutrition: TrackedNutrients = {
@@ -94,7 +94,7 @@ export class NutritionSumTotal{
                
     }
 
-    #updateNutrients(nutrient: DBEntry['nutrients'][0], divisor:number){
+    #updateNutrients(nutrient: CommonFoodsType['full_nutrients'][0], divisor:number){
         const nutrientName = nutrientIds.get(nutrient.attr_id)
         if(nutrientName !== undefined){
             const nutrientGroup = nutrientTables.get(nutrientName)
@@ -152,8 +152,12 @@ export class NutritionSumTotal{
     #handleTrackedNutrients(nutrientData:TrackedNutrients, servings?:number){
         const nutrientTables = Object.keys(nutrientData) as (keyof TrackedNutrients)[]
         nutrientTables.forEach(table => {
-            const nutrients = Object.keys(nutrientData[table])
-            nutrients.forEach(nutrient => this.nutrition[table][nutrient] += nutrientData[table][nutrient] / (servings ?? 1))
+            const tableGroup = this.nutrition[table]
+            const nutrients = Object.keys(tableGroup)
+            const importedTableGroup = nutrientData[table]
+            nutrients.forEach(nutrient =>
+                (tableGroup[nutrient as keyof typeof tableGroup] as number) += importedTableGroup[nutrient as keyof typeof importedTableGroup] / (servings ?? 1)
+            )
         })
     }
 }

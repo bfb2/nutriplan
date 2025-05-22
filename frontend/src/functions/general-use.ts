@@ -34,7 +34,7 @@ export const accessDisplayedDashboardNutrients = ():Record<Nutrients, boolean> =
     return JSON.parse(localStorage.getItem('dashboard nutrients') || JSON.stringify(dashboardItems))
 }
 
-export function isMeal(item:CustomItem|undefined): item is Meals|LinkedMeals{
+export function isMeal(item:CustomItem|undefined): item is Meals{
     if(item == undefined)
         return false
     return 'mealName' in item

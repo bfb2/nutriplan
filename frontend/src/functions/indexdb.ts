@@ -1,4 +1,4 @@
-import { SavedRecipe, Meals, CustomFood, DiaryEntry, IndexDBStorage, LinkedCustomItem, UserDefinedItems,CustomItem, DBEntry, SavedFoodDB, SavedMealDB, SavedRecipeDB, ReturnedDiaryEntry, DBEntrySavedItem, LinkedCustomItems } from "../types/types"
+import {  DiaryEntry,  LinkedCustomItem, UserDefinedItems,CustomItem, DBEntry, SavedFoodDB, SavedMealDB, SavedRecipeDB, ReturnedDiaryEntry, DBEntrySavedItem, Meals, SavedRecipe, CustomFood,  } from "../types/types"
 import { isDBEntrySavedItem, isDiaryEntry, isMeal, isRecipe } from "./general-use"
 //const db,connectionToDB,transaction, returnedObjectStore;
 /* export async function addEntryToDBNoIndexKey(dbName,value,updateIndex){
@@ -75,7 +75,7 @@ export async function retrieveDiaryEntry(date:string): Promise<ReturnedDiaryEntr
 export async function retrieveDiaryEntry(date?:string): Promise<ReturnedDiaryEntry|undefined|ReturnedDiaryEntry[]>{
      const returnedObjectStore =  await connectToDB('diary')
      
-     return new Promise((resolve,reject)=>{
+     return new Promise((resolve)=>{
         if(date !== undefined){
             const request:IDBRequest<DiaryEntry|undefined> = returnedObjectStore.get(date)
             
@@ -118,20 +118,19 @@ const linkDiaryData = ( diaryEntry:DiaryEntry) => {
 export const linkCustomItem = (item:(DBEntry | DBEntrySavedItem)[]) : Promise<DBEntry | LinkedCustomItem>[] =>  {
     const linkedData = item.map(async entry => {
         if(isDBEntrySavedItem(entry)){
-            const item = await retrieveItemByID(entry.id)
-            
-                if(isMeal(item)){
-                   const linkedMealItems = linkCustomItem(item.mealItems)
-                   await Promise.all(linkedMealItems).then(data => item.mealItems= data)
+            const retrievedItem = await retrieveItemByID(entry.id) as Meals|SavedRecipe|CustomFood
+                if(isMeal(retrievedItem)){
+                   const linkedMealItems = linkCustomItem(retrievedItem.mealItems)
+                    const linkedItems = await Promise.all(linkedMealItems).then(data => ({quantity:entry.quantity, item:{...retrievedItem, mealItems:data}}) )//item.mealItems= data)
+                    return linkedItems
                 }
                     
-                else if(isRecipe(item)){
-                    const linkedIngredients = linkCustomItem(item.ingredients)
-                    await Promise.all(linkedIngredients).then(data => item.ingredients = data)
+                else if(isRecipe(retrievedItem)){
+                    const linkedIngredients = linkCustomItem(retrievedItem.ingredients)
+                    return Promise.all(linkedIngredients).then(data => ({quantity:entry.quantity, item:{...retrievedItem, ingredients:data}}))//item.ingredients = data)
                 }
-                    
-                
-                    return {quantity:entry.quantity, item} as LinkedCustomItem
+                else
+                    return {quantity:entry.quantity, item:retrievedItem} 
         }
         else 
             return entry
@@ -140,7 +139,20 @@ export const linkCustomItem = (item:(DBEntry | DBEntrySavedItem)[]) : Promise<DB
 }
 
 export const hideCustomItem = async (id:string, db:UserDefinedItems) => {
-    const returnedItem = await retrieveUserDefinedItems(db, id)
+    let returnedItem: SavedFoodDB|SavedMealDB|SavedRecipeDB|undefined
+        switch (db) {
+            case 'food':
+                returnedItem = await retrieveUserDefinedItems('food', id)
+                break;
+            case 'recipe':
+                returnedItem =  await retrieveUserDefinedItems('recipe', id)
+                break;
+            case 'meal':
+                returnedItem = await retrieveUserDefinedItems('meal', id);
+                break;
+            default:
+                break;
+        }
     if(returnedItem !== undefined){
         returnedItem.hide = true
         const returnedObjectStore = await connectToDB(db)
@@ -149,29 +161,67 @@ export const hideCustomItem = async (id:string, db:UserDefinedItems) => {
 }
 
 
- export async function retrieveUserDefinedItems<T extends UserDefinedItems, U  extends string|undefined = undefined>(db:T, id?:U): Promise<ReturnedItemType<T,U>>{ 
+type RetrievedItemType = SavedFoodDB|SavedFoodDB[]|SavedMealDB|SavedMealDB[]|SavedRecipeDB|SavedRecipeDB[]|undefined
+ export async function retrieveUserDefinedItems(db:'food'): Promise<SavedFoodDB[]>
+ export async function retrieveUserDefinedItems(db:'food', id:string): Promise<SavedFoodDB|undefined>
+ export async function retrieveUserDefinedItems(db:'recipe'): Promise<SavedRecipeDB[]>
+ export async function retrieveUserDefinedItems(db:'recipe', id:string): Promise<SavedRecipeDB|undefined>
+ export async function retrieveUserDefinedItems(db:'meal'): Promise<SavedMealDB[]>     
+ export async function retrieveUserDefinedItems(db:'meal', id:string): Promise<SavedMealDB|undefined>
+ export async function retrieveUserDefinedItems(db:UserDefinedItems, id?:string): Promise<RetrievedItemType>{ 
     const store = await connectToDB(db)
     return new Promise((resolve) => {
         if(id == undefined){
-            const getAllItemsReq:IDBRequest<SavedFoodDB[]|SavedMealDB[]|SavedRecipeDB[]> = store.getAll()
+            const getAllItemsReq:IDBRequest<SavedFoodDB[] | SavedMealDB[] | SavedRecipeDB[]> = store.getAll()
             getAllItemsReq.onsuccess = () => {
-                const filteredResults:SavedFoodDB[]|SavedMealDB[]|SavedRecipeDB[]= []
-                 getAllItemsReq.result.forEach(item => !item.hide && filteredResults.push(item))
-                resolve(filteredResults)
+                if(db == 'food'){
+                    const results = getAllItemsReq.result as SavedFoodDB[]
+                    const filteredResults:SavedFoodDB[] = []
+                    results.forEach((item:SavedFoodDB) => !item.hide && filteredResults.push(item))
+                    resolve(filteredResults)
+                }
+                    
+                else if(db == 'recipe'){
+                    const results = getAllItemsReq.result as SavedRecipeDB[]
+                    const filteredResults:SavedRecipeDB[] = []
+                    results.forEach((item:SavedRecipeDB) => !item.hide && filteredResults.push(item))
+                    resolve(filteredResults)
+                }
+
+                else if(db == 'meal'){
+                    const results = getAllItemsReq.result as SavedMealDB[]
+                    const filteredResults:SavedMealDB[] = []
+                    results.forEach((item:SavedMealDB) => !item.hide && filteredResults.push(item))
+                    resolve(filteredResults)
+                }
             }
     }
         else{
-            const request:IDBRequest = store.get(id)
+            const request:IDBRequest<RetrievedItemType> = store.get(id)
             request.onsuccess = () => resolve(request.result)
         }
     })
 }
 
 export const retrieveItemByID = async (id:string) => {
-    const dbs:('recipe'|'food'|'meal')[] = ['recipe','food', 'meal']
+    const dbs:UserDefinedItems[] = ['recipe','food', 'meal']
     
     for (let index = 0; index < dbs.length; index++) {
-        const result = await retrieveUserDefinedItems(dbs[index], id)
+        let result: SavedFoodDB|SavedMealDB|SavedRecipeDB|undefined
+        switch (dbs[index]) {
+            case 'food':
+                result = await retrieveUserDefinedItems('food', id)
+                break;
+            case 'recipe':
+                result =  await retrieveUserDefinedItems('recipe', id)
+                break;
+            case 'meal':
+                result = await retrieveUserDefinedItems('meal', id);
+                break;
+            default:
+                break;
+        }
+    
         if(result !== undefined)
             return result.data
     }
@@ -211,12 +261,7 @@ export const clearPersonalData = async () => {
     })
 }
 
-/* export const importDiary = (data:DiaryEntry) => {
-    const  returnedObjectStore = await connectToDB('diary');
-    returnedObjectStore.put(...data)
-} */
-
-export const removeDiaryItem = async (index:number, date) => {
+export const removeDiaryItem = async (index:number, date:string) => {
     const returnedObjectStore = await connectToDB('diary')
     const request:IDBRequest<DiaryEntry> = returnedObjectStore.get(date)
     request.onsuccess = () => {
@@ -235,30 +280,3 @@ export async function getAllDBValues(dbName:UserDefinedItems | 'diary'){
 
     return returnedValue
 }
-
-const retrieveSpecificSavedItem = async (id:string, type:UserDefinedItems) => {
-    const returnedObjectStore = await connectToDB(type)
-
-}
-
-export const retrieveDiaryNutrients = (id:string, type:UserDefinedItems) => {
-
-}
-
-type ReturnedItemType<T, U> = 
-T extends 'recipe' ? 
-    U extends string ?
-        SavedRecipeDB|undefined
-    :
-    SavedRecipeDB[]
-:
-T extends 'food' ?
-    U extends string ?
-        SavedFoodDB|undefined
-    :
-        SavedFoodDB[]
-:
-    U extends string ?
-        SavedMealDB|undefined
-    :
-        SavedMealDB[]

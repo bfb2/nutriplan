@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react"
 import { retrieveDiaryEntry } from "../functions/indexdb"
-import { DiaryEntry, DiaryEntries, DBEntry, SavedRecipe, Meals, CustomFood,ReturnedDiaryEntry, ReturnedDiaryEntries } from "../types/types"
+import { ReturnedDiaryEntry, ReturnedDiaryEntries } from "../types/types"
 import { NutritionSumTotal } from "../classes"
-import { isDBEntrySavedItem,isRecipe,isMeal } from "../functions/general-use"
-import { retrieveItemByID } from "../functions/indexdb"
 
 const useSavedData = ( indexKeyValue:string|number) =>{
     const [savedData, setSavedData] = useState<ReturnedDiaryEntry|ReturnedDiaryEntries>()

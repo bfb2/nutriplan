@@ -7,7 +7,7 @@ interface PropTypes{
     hover?:boolean;
     tdClass?:string|undefined;
     rowClass?:string|undefined;
-    contents:string[];
+    contents:(string | number | JSX.Element)[];
     active?:boolean
 }
 
