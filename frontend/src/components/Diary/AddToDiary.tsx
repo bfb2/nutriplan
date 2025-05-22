@@ -24,7 +24,7 @@ const AddToDiary = ({day, diaryEntries, refreshDiary}:PropsTypes) =>{
             updateReference([data.key], 'diary')
         addEntryToDB('diary', linkedData, dateKey,)
         if(isUserLoggedIn()){
-            fetch('http://localhost:5000/save-diary-entry',{
+            fetch('https://nutriplan-fngd.onrender.com/save-diary-entry',{
                 method:'POST',
                 body:JSON.stringify({username:getCookieValue('user'), linkedData, date:dateKey}),
                 headers:{"Content-Type": "application/json"},
@@ -85,7 +85,7 @@ const removeDiaryItemAndUpdate = (index:number, dateKey:string, refreshDiary:(in
     removeDiaryItem(index, dateKey).then(() => refreshDiary(dateKey)); 
     if(isUserLoggedIn()){
         console.log('logged')
-        fetch('http://localhost:5000/remove-diary-item',{
+        fetch('https://nutriplan-fngd.onrender.com/remove-diary-item',{
             method:'DELETE',
             body:JSON.stringify({username:getCookieValue('user'), index, date:dateKey}),
             headers:{"Content-Type": "application/json"},

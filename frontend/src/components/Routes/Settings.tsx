@@ -49,7 +49,7 @@ const updateDashboard = (settings:Record<Nutrients, boolean>, value:boolean, nut
     settings[nutrient] = value;
     localStorage.setItem('dashboard nutrients', JSON.stringify(settings))
     if(isUserLoggedIn()){
-        fetch('http://localhost:5000/update-dashboard',{
+        fetch('https://nutriplan-fngd.onrender.com/update-dashboard',{
             method:'POST',
             body:JSON.stringify({nutrient, value:value}),
             headers:{"Content-Type": "application/json"},

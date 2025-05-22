@@ -28,7 +28,7 @@ const SignUp = () =>{
             11000:{msg:'Username taken, try a different username', field:'name'},
             generic:{msg:'Error, please try again', field:undefined}
         }
-        fetch('http://localhost:5000/signup',{
+        fetch('https://nutriplan-fngd.onrender.com/signup',{
             method:'POST',
             body:JSON.stringify({username:name, password}),
             headers:{"Content-Type": "application/json"}

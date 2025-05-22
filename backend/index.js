@@ -20,7 +20,7 @@ const __dirname = path.dirname(__filename)
 
 
 app.use(cors({
-    origin: 'http://localhost:5173', // Specify your frontend origin
+    origin: 'https://bfb2.github.io/', // Specify your frontend origin
     credentials: true,  // Allow credentials
   }));
 app.use(bodyParser.urlencoded({

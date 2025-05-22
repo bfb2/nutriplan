@@ -30,7 +30,7 @@ const Login = () =>{
         const formObject = Object.fromEntries(formData.entries())
         const {username ,password} = formObject as {username: string, password:string}
         
-        fetch('http://localhost:5000/login',{
+        fetch('https://nutriplan-fngd.onrender.com/login',{
             method:'POST',
             body:JSON.stringify({username, password}),
             headers:{"Content-Type": "application/json"},

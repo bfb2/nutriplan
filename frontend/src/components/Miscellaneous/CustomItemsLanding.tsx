@@ -79,7 +79,7 @@ const Dropdown = ({db, id, setEditMode}:{db:UserDefinedItems, id:string, setEdit
     return <div className="relative">
         <div onClick={()=>setDropdownActive(prev => !prev)}><MoreHorizIcon className="option circle-radius pointer"/></div>
         {dropdownActive && <ul className="popup">
-            {options.map(option => <li onClick={()=>{deleteUserDefinedItem(db, id); fetch('http://localhost:5000/delete-custom-item',{
+            {options.map(option => <li onClick={()=>{deleteUserDefinedItem(db, id); fetch('https://nutriplan-fngd.onrender.com/delete-custom-item',{
                         method:'DELETE',
                         body:JSON.stringify({id, db}),
                         headers:{"Content-Type": "application/json"},

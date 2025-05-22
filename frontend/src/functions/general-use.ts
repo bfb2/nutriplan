@@ -12,7 +12,7 @@ export const updateDailyLimits = (nutrient:Nutrients, evt:React.KeyboardEvent<HT
     localStorage.setItem('nutrient targets', JSON.stringify(nutrientTargets))
     if(isUserLoggedIn()){
         const username = getCookieValue('user')
-        fetch('http://localhost:5000/update-rda',{
+        fetch('https://nutriplan-fngd.onrender.com/update-rda',{
             method:'POST',
             body:JSON.stringify({nutrient, value:userInput, username}),
             headers:{"Content-Type": "application/json"},
@@ -174,7 +174,7 @@ export const updateSingleReference = async (item:string|number, referencedBy:'di
                 retrievedItem.referencedBy[referencedBy]++
 
             if(isUserLoggedIn())
-                fetch('http://localhost:5000/save-custom-item',{
+                fetch('https://nutriplan-fngd.onrender.com/save-custom-item',{
                     method:'POST',
                     body:JSON.stringify({username:getCookieValue('user'), retrievedItem, itemType:type}),
                     headers:{"Content-Type": "application/json"},
@@ -250,7 +250,7 @@ const generateSavedItemReference = (item:DBEntry|LinkedCustomItem) => {
 }
 
 export const saveToMongo = (data:{data:CustomItem, itemType:UserDefinedItems}) => {
-    fetch('http://localhost:5000/save-custom-item',{
+    fetch('https://nutriplan-fngd.onrender.com/save-custom-item',{
         method:'POST',
         body:JSON.stringify({...data, username:getCookieValue('user')}),
         headers:{"Content-Type": "application/json"},
