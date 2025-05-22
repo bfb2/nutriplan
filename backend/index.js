@@ -42,14 +42,12 @@ const mongoDB = client.db('nutrition').collection('users')
 const hashPW = async (password) => {
     let salt = await bcrypt.genSalt()
     let hashedPassword = await bcrypt.hash(password,salt)
-    console.log(hashedPassword, 'hash')
     return hashedPassword
 }
 
 app.post('/signup', async (req, res) => {
     let {username, password} = req.body
     let hashedPassword = await hashPW(password)
-    console.log(hashedPassword, 'bash')
     try {
         await client.db('nutrition').collection('users').insertOne({
             _id:username, 
@@ -66,7 +64,6 @@ app.post('/signup', async (req, res) => {
         res.send({success:false, errorCode:error.code || 'generic'})
         
     }
-    console.log(req.body)
 })
 
 app.post('/logout', (req, res)=>{
@@ -85,7 +82,6 @@ app.post('/logout', (req, res)=>{
 
 app.post('/login', async (req, res) => {
     let {password:clientPassword, username} = req.body
-    console.log(clientPassword, username)
     const returnedData = await client.db('nutrition').collection('users').findOne({_id:username})
     
     if(returnedData == null){
@@ -139,7 +135,6 @@ app.delete('/remove-diary-item', (req, res) => {
     const {date, index} = req.body
     if(!userName || !date || !index)
       return
-    console.log(username, date, index)
     mongoDB.updateOne({
         _id: userName
       },
@@ -178,11 +173,10 @@ app.delete('/remove-diary-item', (req, res) => {
 app.delete('/delete-custom-item', (req, res) => {
   const { id, db} = req.body
   const userName = retrieveUserName(req.signedCookies.auth)
-  console.log(userName, id, db)
   if(!userName || !id|| !db)
     return
   
-  mongoDB.updateOne({_id:userName}, {$unset:{[`${db}.${id}`]:1}}).then(x => console.log(x, 'delete'))
+  mongoDB.updateOne({_id:userName}, {$unset:{[`${db}.${id}`]:1}})
 })
 
 app.patch('/update-reference', (req, res) =>{
@@ -204,9 +198,7 @@ app.post('/update-rda', (req, res) => {
 
 app.post('/update-dashboard', (req, res) =>{
   const { nutrient, value} = req.body
-  console.log('rozay, \n\n\n\n\n\n', req.signedCookies)
   const userName = retrieveUserName(req.signedCookies.auth)
-  console.log(userName, '\n\n\n\n\n')
     if(!userName || !nutrient || !value)
       return
     mongoDB.updateOne({_id:userName}, {$set:{[`dashboardDisplay.${nutrient}`]:value}})
@@ -214,7 +206,6 @@ app.post('/update-dashboard', (req, res) =>{
 
 const retrieveUserName = (token) => {
   
-  console.log(token, 'token', '\n\n\n\n\n\n\n\n\n')
   const username = jwt.verify(token, process.env.SECRETKEY).username
   if(username)
     return username
@@ -223,4 +214,3 @@ const retrieveUserName = (token) => {
 const port = process.env.PORT || 5000;
 app.listen(port);
 
-console.log('App is listening on port ' + port);
