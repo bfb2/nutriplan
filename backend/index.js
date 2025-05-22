@@ -9,7 +9,6 @@ import { MongoClient, ServerApiVersion } from "mongodb";
 /* import { insertDocument } from "./crud-mongo.js"; */
 import cookieParser from "cookie-parser";
 import { configDotenv } from 'dotenv';
-import mongoose from 'mongoose';
 
 configDotenv()
 const app =  express()
