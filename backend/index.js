@@ -23,6 +23,7 @@ app.use(cors({
     origin: 'https://bfb2.github.io/', // Specify your frontend origin
     credentials: true,  // Allow credentials
   }));
+app.options('*', cors())
 app.use(bodyParser.urlencoded({
     extended: true
  }))
