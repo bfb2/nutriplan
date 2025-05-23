@@ -74,12 +74,7 @@ app.post('/logout', (req, res)=>{
     secure:true,
     path:'/'
   })
-  res.clearCookie('loggedInToken', {
-    httpOnly:false,
-    path:'/',
-    secure:true,
-    sameSite:'none'
-  })
+  
   res.end()
 })
 
@@ -105,13 +100,6 @@ app.post('/login', async (req, res) => {
         maxAge:43200000,
         path:'/',
         signed:true
-    })
-    res.cookie('loggedInToken', true, {
-      httpOnly:false,
-      secure:true,
-      sameSite:'none',
-      maxAge:43200000,
-      path:'/'
     })
     
     const {recipe, meal, food, nutrientRDA, dashboardDisplay, diary} = returnedData

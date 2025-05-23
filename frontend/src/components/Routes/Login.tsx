@@ -39,6 +39,7 @@ const Login = () =>{
           .then(data => {
             if(data.success == true){
                 const {recipe, meal, food, nutrientRDA, dashboardDisplay, diary} = data as {recipe:Record<string, SavedRecipe>, meal:Record<string, Meals>, food:Record<string, CustomFood>, nutrientRDA:Record<Nutrients, number>, dashboardDisplay:Record<Nutrients, boolean>, diary:Record<string, DiaryEntry>}
+                document.cookie = `loggedInToken=true; max-age=4320000; path=/`
                 const recipes = Object.values(recipe)
                 const meals = Object.values(meal)
                 const foods = Object.values(food)

@@ -9,6 +9,8 @@ const Topbar = ({passedClass, displayLogSign = true}:{passedClass?:string, displ
         fetch('https://nutriplan-fngd.onrender.com/logout',{credentials:'include', method:'POST'}).then(() =>{
                 clearPersonalData()
                 clearPreferences()
+                document.cookie = `loggedInToken=true; max-age=0; path=/`
+
         })
     }
 
