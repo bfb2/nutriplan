@@ -6,7 +6,6 @@ import bodyParser from "body-parser";
 import bcrypt from 'bcrypt'
 import { fileURLToPath } from "url";
 import { MongoClient, ServerApiVersion } from "mongodb";
-/* import { insertDocument } from "./crud-mongo.js"; */
 import cookieParser from "cookie-parser";
 import { configDotenv } from 'dotenv';
 
@@ -35,8 +34,7 @@ const client = new MongoClient(process.env.URI, {
         version:ServerApiVersion.v1,
         strict:true,
         deprecationErrors:true,
-        tls:true,
-        tlsAllowInvalidCertificates:false
+        
     }
 })
 
