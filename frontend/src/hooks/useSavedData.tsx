@@ -13,7 +13,6 @@ const useSavedData = ( indexKeyValue:string|number) =>{
 
     const [nonEmptyDays, setNonEmptyDays] = useState(0)
     const totalNutrients = new NutritionSumTotal(savedData)
-    console.log(totalNutrients, 'wings', savedData, indexKey)
     const accessSavedData = async (indexKey:string|number) => {
         
         if(typeof(indexKey) == 'number' || indexKey == 'all time'){
@@ -45,7 +44,6 @@ const useSavedData = ( indexKeyValue:string|number) =>{
         }
         else if(typeof(indexKey) == 'string'){
             const returnedData = await retrieveDiaryEntry(indexKey)
-            console.log(returnedData, 'wingsss')
               setSavedData(returnedData)
           }
     }

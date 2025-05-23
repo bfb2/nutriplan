@@ -113,7 +113,6 @@ const Recipes = () =>{
                 return
             setDetails(prev => ({...prev, servingDetails:{...prev.servingDetails, servings:userInput}}))
         }
-            console.log('servings', details.servingDetails.servings)
 
      return <>
         <CircleReferenceError/>

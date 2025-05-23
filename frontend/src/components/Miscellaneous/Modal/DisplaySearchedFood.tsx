@@ -64,7 +64,7 @@ const DisplaySearchedFood = ({results, tableKey, saveFoodFunc, addItemBtnText}:P
             const tableContent:[string][]=[], getItemInfoFuncs:Promise<Func>[] = []
             
             if(isRecipes(results)){
-                console.log('recipe check ran ma')
+                
                results.forEach((item) =>{
                 tableContent.push([item.recipeName])
                 
@@ -116,7 +116,7 @@ const DisplaySearchedFood = ({results, tableKey, saveFoodFunc, addItemBtnText}:P
                     getItemInfoFuncs.push(Promise.all(linkCustomItem(item.mealItems)).then(linkedItems => {
                         const nutritionInfo = new NutritionSumTotal(linkedItems).nutrition
                         const macros = {protein:nutritionInfo.protein.protein, energy:nutritionInfo.general.energy, carbohydrates:nutritionInfo.carbohydrates.carbohydrates, fat:nutritionInfo.fat.fat}
-                        console.log('masque', item)
+                        
                         return ()=>setSelectedItem({
                             name:item.mealName,
                             key:item.id,

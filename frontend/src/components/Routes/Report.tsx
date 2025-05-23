@@ -39,7 +39,6 @@ export default function Report(){
              
     }
     const {protein:{protein}, general:{energy:calories}, fat:{fat}, carbohydrates:{carbohydrates:carbs}} = totalNutrients.nutrition
-    console.log(calories, numOfDays)
 
     return <main className="outlet">
         <h1 className='heading heading-margin'>Nutrition Report</h1>

@@ -84,7 +84,7 @@ const AddToDiaryButton = ({children, title, onClick}:DiaryProps) => {
 const removeDiaryItemAndUpdate = (index:number, dateKey:string, refreshDiary:(indexKey: string) => Promise<void>) => {
     removeDiaryItem(index, dateKey).then(() => refreshDiary(dateKey)); 
     if(isUserLoggedIn()){
-        console.log('logged')
+  
         fetch('https://nutriplan-fngd.onrender.com/remove-diary-item',{
             method:'DELETE',
             body:JSON.stringify({username:getCookieValue('user'), index, date:dateKey}),

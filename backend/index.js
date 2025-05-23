@@ -71,12 +71,14 @@ app.post('/logout', (req, res)=>{
   res.clearCookie('auth', {
     httpOnly:true,
     sameSite:'strict',
-    secure:false,
+    secure:true,
     path:'/'
   })
   res.clearCookie('loggedInToken', {
     httpOnly:false,
-    path:'/'
+    path:'/',
+    secure:true,
+    sameSite:'none'
   })
   res.end()
 })
@@ -98,7 +100,7 @@ app.post('/login', async (req, res) => {
 
     res.cookie('auth',token,{
         httpOnly:true,
-        secure:false,
+        secure:true,
         sameSite:'strict',
         maxAge:43200000,
         path:'/',
@@ -106,6 +108,8 @@ app.post('/login', async (req, res) => {
     })
     res.cookie('loggedInToken', true, {
       httpOnly:false,
+      secure:true,
+      sameSite:'none',
       maxAge:43200000,
       path:'/'
     })

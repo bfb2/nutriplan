@@ -53,32 +53,6 @@ const Meal = () =>{
         setMealDetails(prev => ({...prev, mealItems:updatedMealItems}))
         setDisplaySave(true)
     }
-    /* const alertItemInUse = (event: React.FormEvent<HTMLFormElement>, newItemAdded:boolean, saveItemToDb:(event:React.FormEvent<HTMLFormElement>)=>void, changeIdState:()=>void) => {  
-        
-        if(referencedItems.length > 0 && (diary > 0 || recipes >0 || meals >0)){
-            setErrorModal(prev => ({...prev, inUse:true}))
-            console.log('dmitchel')
-            return new Promise(resolve => {
-                console.log('dmitchel2')
-                setResolver(()=>resolve)
-            }).then(selection => {
-                console.log('dmitchel3')
-                if(selection == true)
-                    saveMealToDB(event)
-                else{
-                    generateID().then(newID => {
-                        hideCustomItem(mealDetails.id, 'meal')
-                        saveMealToDB(event, newID);
-                        setMealDetails(prev => ({...prev, id:newID}))
-                    })
-                }
-                 setErrorModal(prev => ({...prev, inUse:false}))   
-            })
-        }
-            
-        else
-            saveMealToDB(event)
-    } */
 
     const saveMealToDB = (event: React.FormEvent<HTMLFormElement>, newID?:string) => {
         const formData = new FormData(event.target as HTMLFormElement)

@@ -59,7 +59,6 @@ export function isRecipe(item:LinkedCustomItems|undefined|CustomItem): item is S
 }
 
 export function isRecipes(savedItem:CustomItem[]): savedItem is SavedRecipe[]{
-    console.log(savedItem, 'por')
     return 'recipeName' in savedItem[0]
 }
 

@@ -5,7 +5,7 @@ import { accessNutrientGoals } from "../../../functions/general-use"
 const MacroTargets = ({nutrition}:{nutrition:Nutrition}) =>{
     const {calories, protein, carbs, fat} = nutrition
     const {protein:proteinGoal, energy:calorieGoal, carbohydrates:carbGoal, fat:fatGoal} = accessNutrientGoals()
-    console.log(calorieGoal, typeof(calorieGoal), 'CG')
+   
     return <>
             <div className='border spacing'></div>
             <div className='spacing grow'>

@@ -1,7 +1,6 @@
 import { APIResponseFoods, ReturnedFoodResponse,ExtraFoodInfo, ExtraServingInfo  } from "../types/types";
 
 export async function processQuery(query:string):Promise<APIResponseFoods> {
-    console.log('nba', import.meta.env.REACT_APP_API_ID)
     const response = await fetch(`https://trackapi.nutritionix.com/v2/search/instant?query=${query}&detailed=true`,{
         method:'GET',
         headers:{
@@ -32,7 +31,6 @@ export async function getDifferentServingSizes(query:string) :Promise<ExtraServi
         body:JSON.stringify({query:`${query}`})
     })
     const queryResults:ExtraFoodInfo = await response.json();
-    console.log(queryResults)
 
     const servingSizes = queryResults.foods[0].alt_measures
     
