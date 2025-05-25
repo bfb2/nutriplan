@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createBrowserRouter, redirect, RouterProvider } from 'react-router'
+import { createBrowserRouter, RouterProvider } from 'react-router'
 import './index.css'
 import Dashboard from './components/Routes/Dashboard.tsx'
 import Report from './components/Routes/Report.tsx'
