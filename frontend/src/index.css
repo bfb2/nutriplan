@@ -54,6 +54,13 @@ nav ul{
   padding-left:0px
 }
 
+.nav-trans{
+  transition: width .5s;
+}
+
+.nav-open-trans{
+  transition: width .5s;
+}
 
 .app-container{
   display: inline-grid;
@@ -82,15 +89,15 @@ nav ul{
     user-select: none;
     border: 1px solid transparent;
     font-size: 1rem;
-    border-radius: .25rem;
-    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    border-radius: 0rem;
+    transition: margin-left .5s,  color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     height: 50px;
     display: flex;
     align-items: center;
     background: #272a3a;
     border-bottom: 1px solid #3b3f4d;
     border-top-right-radius: 20px;
-
+    margin-left:auto;
 }
 
 .menu{
@@ -109,9 +116,42 @@ nav ul{
   color:#c3c6d3
 }
 
+.none{
+  display: none;
+}
+
+.mh-137{
+  max-height: 137px!important;
+}
+
+.mh-91{
+  max-height: 91px!important;
+  overflow: hidden;
+}
+
+.mt-24{
+  margin-top: 1.5rem;
+}
+
+
+
+.close-trans{
+  transition: max-height .5s;
+}
+
 .nav-closed{
   width:4rem!important; 
   z-index:1;
+}
+
+.nc{
+  max-height:0;
+  overflow: hidden;
+}
+
+.linkbtn{
+  color: white;
+  text-decoration-line: none;
 }
 
 .nav-open{
@@ -322,7 +362,33 @@ nav ul{
   
 }
 
+.notfoundhead{
+  color:#ff6733;
+  font-size: 24px;
+  font-weight: 700;
+}
 
+.notfoundcode{
+  font-size: 60px;
+  font-family: Work Sans, sans-serif; 
+  font-weight: 700;
+  line-height: 37px;
+  letter-spacing: 0;
+  margin-top: 1.5rem;
+  margin-bottom:0;
+}
+
+.desc{
+  font-size:24px;
+  font-weight: 400;
+  margin-top: 1.5rem;
+}
+
+.notfoundmain{
+  justify-items: center;
+  margin-top: 3rem;
+  height: 84vh!important;
+}
 
 .flex{
   display: flex;
@@ -356,6 +422,12 @@ nav ul{
   padding: 24px;
   box-shadow: #7779861a 0 3px 20px;
   margin-top: 1.5rem;
+}
+
+.signlogcon{
+  max-width: 450px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .add-diary-btn-cont{
@@ -395,8 +467,15 @@ nav ul{
   position: relative;
   z-index: 1;
   height: 100%;
-  max-height: 150px;
+  max-height: 200px;
   /* width:100%; */
+}
+
+.space-macros{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 79%;
 }
 
 .progress-bar{
@@ -1110,16 +1189,20 @@ textarea.searchbar{
       display: none;
     }
 
-    .toggle-button{
-      border-radius: 0;
-    }
-
     .nav-open .toggle-button{
       border-top-right-radius: 20px;
     }
 
     .nav-closed{
       background: #1a1a1a00;
+    }
+
+    .nav-trans{
+      transition: width .5s, background 0s .48s;
+    }
+
+    .nav-open-trans{
+      transition: width .5s;
     }
 
     .nav-open{
@@ -1145,6 +1228,11 @@ textarea.searchbar{
 
     .col{
       flex-direction: column;
+    }
+
+    .spacing{
+      padding-left: 0;
+      margin-top: .5rem;
     }
 
     .input-label{

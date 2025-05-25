@@ -14,7 +14,7 @@ const Login = () =>{
     const navigate = useNavigate()
     useEffect(()=>{
         if(isUserLoggedIn()){
-            navigate('/dashboard')  
+            navigate('/nutriplan/dashboard')  
         }
            
         else
@@ -61,7 +61,7 @@ const Login = () =>{
                     dashboardNutrientKeys.forEach(key => nutrientsOnDashboard[key] = dashboardDisplay[key])
                     localStorage.setItem('dashboard nutrients', JSON.stringify(nutrientsOnDashboard))
                 }                
-                navigate('/dashboard')
+                navigate('/nutriplan/dashboard')
             }
             else
                 setErrorMsg(errorCodesMsgs[data.errorCode])
@@ -72,13 +72,13 @@ const Login = () =>{
         <Topbar displayLogSign={false} passedClass="logsigntop"/>
         <main className="signup-container">
             {errorMsg && <ErrorMessage message={errorMsg}/>}
-            <form className="container mini-container-padding" onSubmit={attemptLogin}>
+            <form className="container mini-container-padding signlogcon" onSubmit={attemptLogin}>
                 <h1 className="container-text">Welcome Back</h1>
                 <Label labelName="Username">
-                    <Input placeholder={'Username'} name="username" extraClass="width100"/>
+                    <Input placeholder={'Username'} name="username" extraClass="width100" autocomplete="username"/>
                 </Label>
                 <Label labelName="Password" passedClass="mt-10">
-                    <Input placeholder={'Password'} name="password" extraClass="width100" type="password"/>
+                    <Input placeholder={'Password'} name="password" extraClass="width100" type="password" autocomplete="current-password"/>
                 </Label>
 
                 <button className="modal-submit-pos grn-btn signupbtn">Login</button>
@@ -86,7 +86,7 @@ const Login = () =>{
             <div className='mt-20'>
                 <span>Not a member?</span>
                 <br/>
-                <Link to={'/signup'} className='login'>Sign Up</Link>
+                <Link to={'/nutriplan/signup'} className='login'>Sign Up</Link>
             </div>
         </main>
     </>

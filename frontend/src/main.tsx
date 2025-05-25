@@ -12,56 +12,55 @@ import Food from './components/Routes/Food.tsx'
 import Settings from './components/Routes/Settings.tsx'
 import SignUp from './components/Routes/SignUp.tsx'
 import Login from './components/Routes/Login.tsx'
+import NotFound from './components/Routes/NotFound.tsx'
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root/>,
     errorElement: <div>error</div>,
-    action: ()=>redirect('/dashboard'),
     children:[
       {
-        path: "/dashboard",
+        path: "/nutriplan/dashboard",
         element: <Dashboard/>
       },
       
       {
-        path: "/diary",
+        path: "/nutriplan/diary",
         element: <Diary/>
       },
       {
-        path: "/report",
+        path: "/nutriplan/report",
         element: <Report/>
       },
       {
-        path:'/meal',
+        path:'/nutriplan/meal',
         element:<Meal/>
       },
       {
-        path:'/recipe',
+        path:'/nutriplan/recipe',
         element:<Recipes/>
       },
       {
-        path:'food',
+        path:'nutriplan/food',
         element:<Food/>
       },
       { 
-        path:'settings',
+        path:'nutriplan/settings',
         element:<Settings/>
-      },
-      
-      {
-        path:'/*',
-        element:<div>404</div>
       }
     ],
   },
    {
-    path:'signup',
+    path:'nutriplan/signup',
     element: <SignUp/>,
   },
   {
-    path:'login',
+    path:'nutriplan/login',
     element:<Login/>,
+  },
+  {
+    path:'/*',
+    element:<NotFound/>
   } 
 ])
 

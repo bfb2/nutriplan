@@ -14,7 +14,7 @@ interface NavItemDropdownProps{
 const NavItemDropdown = ({dropdownLabel, dropdownInfo, navbarToggled, active}:NavItemDropdownProps) =>{
     const [dropDownToggled, setDropdownToggled] = useState(false)
     
-    return<Navitem extraClass={`${navbarToggled && 'mb-20'} ${!navbarToggled && 'dis-block'}`}>
+    return<Navitem extraClass={`${navbarToggled && 'mb-20'} ${!navbarToggled && 'dis-block'} `}>
             <div className={`nav-li-item ${navbarToggled? 'nav-li-item-edge' : 'pr0'}`} 
                  onClick={()=>setDropdownToggled(prev => !prev)}
             >
@@ -24,16 +24,14 @@ const NavItemDropdown = ({dropdownLabel, dropdownInfo, navbarToggled, active}:Na
                 </span>
                 {!navbarToggled && <ExpandMoreIcon className={`expand-btn ${dropDownToggled&& 'rotate180'}`}/>} 
             </div>
-                
                
-            {(dropDownToggled|| navbarToggled) && 
-                <ul className={`${navbarToggled && 'sublist-c'}`}>
-                    {dropdownInfo.map(item => 
-                        <Navitem>
-                            <Link to={item.link} className={`sublist-item ${navbarToggled && 'sublist-item-c'} ${item.active && 'active-nav-li-item'}`}>{item.label}</Link>
-                        </Navitem>)}    
-                </ul>
-            }    
+            <ul className={`close-trans opacity0 ${navbarToggled && 'sublist-c'} ${dropDownToggled ? 'mh-91' : !navbarToggled && 'nc'}`}>
+                {dropdownInfo.map(item => 
+                    <Navitem>
+                        <Link to={item.link} className={`sublist-item ${navbarToggled && 'sublist-item-c'} ${item.active && 'active-nav-li-item'}`}>{item.label}</Link>
+                    </Navitem>)}    
+            </ul>
+              
         </Navitem>
         
         

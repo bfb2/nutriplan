@@ -35,7 +35,7 @@ const SignUp = () =>{
         }).then(res => res.json() as Promise<({success:true} | {success:false, errorCode:keyof typeof errorCodesMsgs})>)
           .then(data => {
             if(data.success==true){
-                navigate('/dashboard')
+                navigate('/nutriplan/dashboard')
             }
             else{
                 setErrorMsg({msg:errorCodesMsgs[data.errorCode].msg, errorField:errorCodesMsgs[data.errorCode].field}) 
@@ -56,17 +56,17 @@ const SignUp = () =>{
         <main className="signup-container">
             <h1 className="page-title">Create Your Free Account</h1>
             {errorMsg.msg !== '' && <ErrorMessage message={errorMsg.msg}/>}
-            <form className="container" onSubmit={submitSignUpData}>
+            <form className="container signlogcon" onSubmit={submitSignUpData}>
                 <Label labelName="Username" passedClass="col">
-                    <Input name="name" placeholder={'Username'} onFocus={removeErrorMsg} />
+                    <Input name="name" placeholder={'Username'} onFocus={removeErrorMsg} autocomplete="username"/>
                 </Label>
 
                 <Label labelName="Password" passedClass="mt-10 col">
-                    <Input name="password" placeholder={'Password'} onFocus={removeErrorMsg} type="password"/>
+                    <Input name="password" placeholder={'Password'} onFocus={removeErrorMsg} type="password" autocomplete="current-password"/>
                 </Label>
 
                 <Label labelName="Confirm Password" passedClass="mt-10 col input-label">
-                    <Input name="confirmedPassword" placeholder={'Confirm Password'} onFocus={removeErrorMsg} type="password"/>
+                    <Input name="confirmedPassword" placeholder={'Confirm Password'} onFocus={removeErrorMsg} type="password" autocomplete="current-password"/>
                 </Label>
                 <button className="modal-submit-pos grn-btn signupbtn">SIGN UP</button>
             </form>

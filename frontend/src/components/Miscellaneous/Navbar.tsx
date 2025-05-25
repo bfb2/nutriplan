@@ -45,12 +45,12 @@ export default function Navbar(){
 }
 
     const dropdownInfo:DropdownInfo[] =[
-        {link:'food', label:' Custom Foods', active:activeLink.food},
-        {link: 'recipe', label:'Custom Recipes', active:activeLink.recipe},
-        {link:'meal', label:' Custom Meals', active:activeLink.meal},
+        {link:'nutriplan/food', label:' Custom Foods', active:activeLink.food},
+        {link: 'nutriplan/recipe', label:'Custom Recipes', active:activeLink.recipe},
+        {link:'nutriplan/meal', label:' Custom Meals', active:activeLink.meal},
     ]
     
-    return <nav className={`side-bar ${navClosed ? 'nav-closed' : 'nav-open'} menu`}>
+    return <nav className={`side-bar ${navClosed ? 'nav-trans' : 'nav-open-trans'} ${navClosed ? 'nav-closed' : 'nav-open'} menu`}>
                 
                     <button className='toggle-button toggle-btn-container'>
                         <MenuIcon className={'sidebar-icon'}  onClick={()=>{setNavClosed(!navClosed); localStorage.setItem('navbar', JSON.stringify(!navClosed))}}/>
@@ -97,7 +97,7 @@ function generateNavItemContent(link: keyof ActiveLinkTypes, navClosed: boolean,
 
     return <Navitem extraClass={`${navClosed && 'mb-20'}`}>
              <Link className={`${activeLink[link]  && 'active-nav-li-item'} nav-li-item`} 
-                   to={link}
+                   to={`nutriplan/${link}`}
              > 
                 {getLinkIcon()}
                 <span className={`nav-li-name ${navClosed && 'nav-li-name-toggled'}`}>

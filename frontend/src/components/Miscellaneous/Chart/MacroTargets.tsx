@@ -10,7 +10,7 @@ const MacroTargets = ({nutrition}:{nutrition:Nutrition}) =>{
             <div className='border spacing'></div>
             <div className='spacing grow'>
                 <div className='energy-sum-title'>Macronutrient Targets</div>
-                <div>
+                <div className="space-macros">
                     <Progress value={calories} total={numOrString(calorieGoal)} color={'#9497a3'} label={'Energy'} secondaryLabel={'cal'}/>
                     <Progress value={protein} total={numOrString(proteinGoal)} color={'#44d07b'}  label={'Protein'} secondaryLabel={'g'}/>
                     <Progress value={carbs} total={numOrString(carbGoal)} color={'#1ccad7'} label={'Carbs'} secondaryLabel={'g'}/>

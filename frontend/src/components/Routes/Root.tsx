@@ -6,16 +6,6 @@ import { useEffect, useState } from "react"
 import { isUserLoggedIn } from "../../functions/general-use"
 
 export default function Root(){
-   /*  const navigate = useNavigate()
-    const location = useLocation().pathname */
-
-
-    
-    /* useEffect(()=>{
-        if(location == '/' || location == '')
-            navigate('/dashboard')
-    },[location]) */
-
     useEffect(()=>{
         const handleOnline = () => setIsOnline(true)
         const handleOffline = () => setIsOnline(false)

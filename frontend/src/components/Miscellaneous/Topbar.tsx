@@ -16,9 +16,9 @@ const Topbar = ({passedClass, displayLogSign = true}:{passedClass?:string, displ
 
     return <header className={`top-bar ${passedClass}`}>
         {displayLogSign && (!isUserLoggedIn()  ? <>
-            <Link to={'signup'}>Sign up</Link>&nbsp; / &nbsp; <Link to={'login'}>Log in</Link>
+            <Link to={'nutriplan/signup'}>Sign up</Link>&nbsp; / &nbsp; <Link to={'nutriplan/login'}>Log in</Link>
         </>
-        :<Link onClick={logOut} to={'login'}>Log out</Link>)} 
+        :<Link onClick={logOut} to={'nutriplan/login'}>Log out</Link>)} 
     </header>
 } 
 
