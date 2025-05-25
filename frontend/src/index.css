@@ -98,6 +98,7 @@ nav ul{
     border-bottom: 1px solid #3b3f4d;
     border-top-right-radius: 20px;
     margin-left:auto;
+    pointer-events: auto;
 }
 
 .menu{
@@ -1195,6 +1196,7 @@ textarea.searchbar{
 
     .nav-closed{
       background: #1a1a1a00;
+      pointer-events: none;
     }
 
     .nav-trans{
@@ -1273,10 +1275,10 @@ textarea.searchbar{
 }
 
 @media(max-width:369px){
-  .height-fit-cont.energy-chart{
+  /* .height-fit-cont.energy-chart{
     position: absolute;
     left: 0;
-  }
+  } */
 
   .flex.nutrient-breakdown-pos.gry-outline{
     justify-content: right;
