@@ -4,9 +4,11 @@ import Topbar from "../Miscellaneous/Topbar"
 import { useState } from "react"
 import ErrorMessage from "../Miscellaneous/ErrorMessage"
 import { useNavigate } from "react-router"
+import Loading from "../Miscellaneous/Loading"
  
 const SignUp = () =>{
     const [errorMsg, setErrorMsg] = useState<{msg:string, errorField:string|undefined}>({msg:'', errorField:undefined})
+    const [displayLoader, setDisplayLoader] = useState(false)
     const navigate = useNavigate()   
     const submitSignUpData = (event:React.FormEvent<HTMLFormElement>) =>{
         event.preventDefault();
@@ -28,6 +30,7 @@ const SignUp = () =>{
             11000:{msg:'Username taken, try a different username', field:'name'},
             generic:{msg:'Error, please try again', field:undefined}
         }
+        setDisplayLoader(true)
         fetch('https://nutriplan-fngd.onrender.com/signup',{
             method:'POST',
             body:JSON.stringify({username:name, password}),
@@ -38,6 +41,7 @@ const SignUp = () =>{
                 navigate('/nutriplan/dashboard')
             }
             else{
+                setDisplayLoader(false)
                 setErrorMsg({msg:errorCodesMsgs[data.errorCode].msg, errorField:errorCodesMsgs[data.errorCode].field}) 
             }
         })
@@ -54,6 +58,7 @@ const SignUp = () =>{
     return <>
         <Topbar displayLogSign={false} passedClass="logsigntop"/>
         <main className="signup-container">
+            {displayLoader && <Loading/>}
             <h1 className="page-title">Create Your Free Account</h1>
             {errorMsg.msg !== '' && <ErrorMessage message={errorMsg.msg}/>}
             <form className="container signlogcon" onSubmit={submitSignUpData}>

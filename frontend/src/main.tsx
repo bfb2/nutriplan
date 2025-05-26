@@ -13,12 +13,17 @@ import Settings from './components/Routes/Settings.tsx'
 import SignUp from './components/Routes/SignUp.tsx'
 import Login from './components/Routes/Login.tsx'
 import NotFound from './components/Routes/NotFound.tsx'
+import NutriplanRoot from './components/Routes/NutriplanRoot.tsx'
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root/>,
     errorElement: <div>error</div>,
     children:[
+      {
+        path:'/nutriplan',
+        element:<NutriplanRoot/>
+      },
       {
         path: "/nutriplan/dashboard",
         element: <Dashboard/>
