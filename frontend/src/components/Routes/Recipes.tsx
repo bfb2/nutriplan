@@ -154,7 +154,7 @@ const Recipes = () =>{
 
                     </div>
                 </Label>
-                <Label labelName="Notes" passedClass="mt-25">
+                <Label labelName="Notes" passedClass="mt-25" itemClass="mobile-w-auto">
                     <TextArea onInput={() => setDisplaySave(true)} name="notes" defaultValue={details.notes}/>
                 </Label>
             </>

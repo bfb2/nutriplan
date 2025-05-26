@@ -42,7 +42,7 @@ const SavedItems = ({getItemsInfo,searchBarPlaceholder,ifEmptyMessage, db}:PropT
         <div className="saved-items-container">
             {
                 (savedItems.data == undefined || savedItems.search.length == 0) ?
-                    <div>{ifEmptyMessage}</div>
+                    <div className="pad1510">{ifEmptyMessage}</div>
                     :
                     displayItems(savedItems.search, getItemsInfo)
             }

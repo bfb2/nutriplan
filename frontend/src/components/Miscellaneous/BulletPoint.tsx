@@ -2,7 +2,7 @@
 
 const BulletPoint = ({color, value, shareOfCals, label}:PropsTypes) => {
     const nutrientValue = typeof(value) == 'string' ? parseFloat(value) : value
-        return <div className="flex textnowrap">
+        return <div className="flex textnowrap nutri-bullets-mobile-padding">
             <span className='bullet' style={{backgroundColor:color}}></span>
             <span className='macrovalue-label'>
                 {`${label}: ${nutrientValue.toFixed(1)}`}

@@ -54,7 +54,7 @@ const TotalNutrientsTables = ({totalNutrients, divisor, interactive =false, upda
     return <section className="container">
         <h2>Nutrient Targets</h2>
         <NutrientTable titles={['General','Amount', "", '% DV']} contents={generateTableContent('general')} col={5}/>
-        <NutrientTable titles={['Carbohydrates','Amount', "", '% DV']} contents={generateTableContent('carbohydrates')} col={5}/>
+        <NutrientTable titles={['Carbs','Amount', "", '% DV']} contents={generateTableContent('carbohydrates')} col={5}/>
         <NutrientTable titles={['Lipids','Amount', "", '% DV']} contents={generateTableContent('fat')} col={5}/>
         <NutrientTable titles={['Vitamins','Amount', "", '% DV']} contents={generateTableContent('vitamins')} col={5}/>
         <NutrientTable titles={['Minerals','Amount', "", '% DV']} contents={generateTableContent('minerals')} col={5}/>

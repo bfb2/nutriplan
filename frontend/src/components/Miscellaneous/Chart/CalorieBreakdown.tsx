@@ -33,15 +33,18 @@ const CalorieBreakdown = ({title, nutrition}:PropTypes) =>{
             ],
           };
           
-    return <div className='height-fit-cont energy-chart'>
+    return <div className='height-fit-cont energy-chart energy-chart-cont'>
         {typeof(title) !== 'undefined' && <div className='energy-sum-title'>{title}</div>}
-        <div className='energy-chart'>
-            <Doughnut className='js-center inherit' data={data} options={options} redraw={true}/>
-            <div className='cals'>
-                <div className='cal-num'>{Math.round(calories)}</div>
-                <div className='cal-label'>cals</div>
-            </div>
+        <div className='mobile-center'>
+            <div className='energy-chart'>
+                <Doughnut className='js-center inherit' data={data} options={options} redraw={true}/>
+                <div className='cals'>
+                    <div className='cal-num'>{Math.round(calories)}</div>
+                    <div className='cal-label'>cals</div>
+                </div>
+            </div> 
         </div>
+        
         
         
     </div>

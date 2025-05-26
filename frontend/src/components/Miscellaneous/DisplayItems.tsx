@@ -18,10 +18,10 @@ const DisplayItems = ({items, removeItemFunc, referencedBy}:{items:(DBEntry|Link
                 return [item.item?.foodName, item.quantity.toFixed(2), `${item.item?.servingDetails.quantity} ${item.item?.servingDetails.measure}`, item.item?.servingDetails.grams, " ", <Cancel onClick={() => deleteItem()} className="pointer"/>]
         }
         else
-            return [item.foodName, item.quantity.toFixed(2), item.servingName, " ", item.weight, <Cancel onClick={() => removeItemFunc(index)} className="pointer"/>]
+            return [item.foodName, item.quantity.toFixed(2), item.servingName,  item.weight, <Cancel onClick={() => removeItemFunc(index)} className="pointer"/>]
     })
 
-    return items.length > 0 && <Table titles={['Name', 'Amount', 'Unit', "",'Weight (g)', ' ']}  addedTableClasses={{rowClass:'disp-items'}}
+    return items.length > 0 && <Table titles={['Name', 'Amount', 'Unit', 'Weight (g)', ' ']}  addedTableClasses={{rowClass:'disp-items', tableClass:'display-items-chart'}}
         contents={content as (string | number | JSX.Element)[][]}/>
 } 
 

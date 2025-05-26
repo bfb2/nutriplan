@@ -88,10 +88,10 @@ const Food = () =>{
                     <Label labelName="Food Name" passedClass="col" >
                         <Input defaultValue={foodDetails.foodName} onInput={() => setDisplaySave(true)} name="foodName"/>
                     </Label>
-                    <Label labelName="Serving Size" passedClass="mt-25 col">
+                    <Label labelName="Serving Size" passedClass="mt-25 col" itemClass="mobile-auto-w item-table-chart">
                         <Table titles={['#', 'Measure', 'Grams']} contents={tableContent} addedTableClasses={{tableClass:'mt0'}}/>
                     </Label>
-                    <Label labelName="Notes" passedClass="mt-25 col">
+                    <Label labelName="Notes" passedClass="mt-25 col" itemClass="mobile-w-auto">
                         <TextArea onInput={() => setDisplaySave(true)} name="notes"/>
                     </Label>
                 </>

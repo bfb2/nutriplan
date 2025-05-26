@@ -112,9 +112,9 @@ const Meal = () =>{
                             <AddCircle sx={{color:'#ff6733'}}/> &nbsp;Add Item
                         </button>
                         {modalActive && <SearchFood modalName="Add Item to Meal" toggleModalFunc={setModalActive} saveFoodFunc={(item) => {addToMealItems(item); setDisplaySave(true)}} addItemBtnText="ADD ITEM"/>}
-                        <DisplayItems items={mealItems} removeItemFunc={removeMealItem} referencedBy="meals"/>
                     </>
                 </Label>
+                <DisplayItems items={mealItems} removeItemFunc={removeMealItem} referencedBy="meals"/>
             </>
         </CustomItemsLanding>
     </>
