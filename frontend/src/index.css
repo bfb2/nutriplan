@@ -1238,7 +1238,7 @@ textarea.searchbar{
     }
 
     .nav-trans{
-      transition: width .5s, background 0s .48s;
+      transition: width .5s, background 0s .48s, z-index .3s;
     }
 
     .nav-open-trans{
@@ -1301,7 +1301,7 @@ textarea.searchbar{
     }
 
     .description-w{
-      width:-webkit-fil-available!important;
+      width:-webkit-fill-available !important;
       width: -moz-available!important;
     }
 
