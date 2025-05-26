@@ -8,6 +8,7 @@ import ErrorMessage from "../Miscellaneous/ErrorMessage"
 import { importDiaryFromDB, importSavedItemsFromDB } from "../../functions/indexdb"
 import { CustomFood, Meals, SavedRecipe, Nutrients, DiaryEntry } from "../../types/types"
 import { accessDisplayedDashboardNutrients, accessNutrientGoals, isUserLoggedIn } from "../../functions/general-use"
+import Loading from "../Miscellaneous/Loading"
 
 
 const Login = () =>{
@@ -20,16 +21,18 @@ const Login = () =>{
         else
             setLoadPermission(true)
     },[])
+
     const errorCodesMsgs = ["Username doesn't exist", "Password doesn't match"]
     const [errorMsg, setErrorMsg] = useState<string>()
     const [loadPermission, setLoadPermission] = useState(false)
+    const [displayLoader, setDisplayLoader] = useState(false)
 
     const attemptLogin = (event:React.FormEvent<HTMLFormElement>) =>{
         event.preventDefault()
         const formData = new FormData(event.target as HTMLFormElement)
         const formObject = Object.fromEntries(formData.entries())
         const {username ,password} = formObject as {username: string, password:string}
-        
+        setDisplayLoader(true)
         fetch('https://nutriplan-fngd.onrender.com/login',{
             method:'POST',
             body:JSON.stringify({username, password}),
@@ -63,8 +66,11 @@ const Login = () =>{
                 }                
                 navigate('/nutriplan/dashboard')
             }
-            else
+            else{
+                setDisplayLoader(false)
                 setErrorMsg(errorCodesMsgs[data.errorCode])
+            }
+                
           })
     }
     if(loadPermission) 
@@ -72,6 +78,7 @@ const Login = () =>{
         <Topbar displayLogSign={false} passedClass="logsigntop"/>
         <main className="signup-container">
             {errorMsg && <ErrorMessage message={errorMsg}/>}
+            {displayLoader && <Loading/>}
             <form className="container mini-container-padding signlogcon" onSubmit={attemptLogin}>
                 <h1 className="container-text">Welcome Back</h1>
                 <Label labelName="Username">

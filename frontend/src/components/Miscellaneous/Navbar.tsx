@@ -31,8 +31,8 @@ export default function Navbar(){
             [location]:true
     })
 
-
-    if(activeLink[location] == false){
+    const trimmedLink = location.slice(10)
+    if(activeLink[trimmedLink] == false){
         setActiveLink({dashboard:false,
             diary:false,
             report:false,
@@ -40,7 +40,7 @@ export default function Navbar(){
             food:false,
             recipe:false,
             settings:false,
-            [location]:true
+            [trimmedLink]:true
         })
 }
 
