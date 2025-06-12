@@ -279,7 +279,7 @@ const DisplaySearchedFood = ({results, tableKey, saveFoodFunc, addItemBtnText}:P
                     </div>
                     <Label labelName="Serving Size" passedClass="serving-pos gry-outline" labelClass="m4">
                         <div className="flex gap10">
-                            <Input value={selectedItem.serving.qtyInput} extraClass="width35" onChange={updateSelectedQty}/>
+                            <Input  extraClass="width35" onChange={updateSelectedQty}/>
                             <Dropdown key={selectedItem.name} options={selectedItem.serving.unit} onChangeFunction={(evt) => setSelectedItem(prev => ({...prev, serving:{...prev.serving, weightSelected:evt.target.selectedIndex, qtyInput:prev.serving.qtyDefaults[evt.target.selectedIndex]}}))}/>
                         </div>
                     </Label> 
