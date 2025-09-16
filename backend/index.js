@@ -70,7 +70,7 @@ app.post('/signup', async (req, res) => {
 app.post('/logout', (req, res)=>{
   res.clearCookie('auth', {
     httpOnly:true,
-    sameSite:'strict',
+    sameSite:'none',
     secure:true,
     path:'/'
   })
