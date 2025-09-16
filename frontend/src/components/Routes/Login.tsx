@@ -33,7 +33,7 @@ const Login = () =>{
         const formObject = Object.fromEntries(formData.entries())
         const {username ,password} = formObject as {username: string, password:string}
         setDisplayLoader(true)
-        fetch('https://nutriplan-fngd.onrender.com/login',{
+        fetch('https://nutriplan-3n8c.onrender.com/login',{
             method:'POST',
             body:JSON.stringify({username, password}),
             headers:{"Content-Type": "application/json"},

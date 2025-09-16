@@ -31,7 +31,7 @@ const SignUp = () =>{
             generic:{msg:'Error, please try again', field:undefined}
         }
         setDisplayLoader(true)
-        fetch('https://nutriplan-fngd.onrender.com/signup',{
+        fetch('https://nutriplan-3n8c.onrender.com/signup',{
             method:'POST',
             body:JSON.stringify({username:name, password}),
             headers:{"Content-Type": "application/json"}

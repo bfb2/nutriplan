@@ -6,7 +6,7 @@ import { clearPersonalData } from "../../functions/indexdb"
 const Topbar = ({passedClass, displayLogSign = true}:{passedClass?:string, displayLogSign?:boolean}) =>{
 
     const logOut = () =>{
-        fetch('https://nutriplan-fngd.onrender.com/logout',{credentials:'include', method:'POST'}).then(() =>{
+        fetch('https://nutriplan-3n8c.onrender.com/logout',{credentials:'include', method:'POST'}).then(() =>{
                 clearPersonalData()
                 clearPreferences()
                 document.cookie = `loggedInToken=true; max-age=0; path=/`
