@@ -74,13 +74,13 @@ export function isDiaryEntry(entry: DiaryEntry| DBEntry[]|DiaryEntries|CustomIte
     return 'date' in entry
 }
 
-export function isReturnedDiaryEntry(entry: ReturnedDiaryEntry|ReturnedDiaryEntries|undefined|(DBEntry | LinkedCustomItem)[]):entry is ReturnedDiaryEntry{
+export function isReturnedDiaryEntry(entry: TrackedNutrients|ReturnedDiaryEntry|ReturnedDiaryEntries|undefined|(DBEntry | LinkedCustomItem)[]):entry is ReturnedDiaryEntry{
     if(entry == undefined)
         return false
     return 'date' in entry
 }
 
-export function isReturnedDiaryEntries(entry:ReturnedDiaryEntry|ReturnedDiaryEntries|undefined|(DBEntry | LinkedCustomItem)[]): entry is ReturnedDiaryEntries{
+export function isReturnedDiaryEntries(entry:TrackedNutrients|ReturnedDiaryEntry|ReturnedDiaryEntries|undefined|(DBEntry | LinkedCustomItem)[]): entry is ReturnedDiaryEntries{
     if(entry == undefined)
         return false
     return 'dateRange' in entry
