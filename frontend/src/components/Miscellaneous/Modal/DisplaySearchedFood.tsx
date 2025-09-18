@@ -89,23 +89,6 @@ const DisplaySearchedFood = ({results, tableKey, saveFoodFunc, addItemBtnText}:P
                         nutrients:nutritionInfo
                     })
                 }))
-                /* const nutrients = item.ingredients.flatMap(ingredient => {
-                    
-                    nutrients.map(nutrient => ({...nutrient, value:nutrient.value/servings}))
-                }) */
-                /* const macros = {protein:nutritionInfo.protein.protein, energy}
-                getItemInfoFuncs.push(()=>setSelectedItem({
-                    name:item.recipeName, 
-                    nutrients,macros,key:item.id, 
-                    startingWeight:undefined, 
-                    serving:{
-                        unit:[item.servingDetails.servingName],
-                        servingWeights:undefined, 
-                        qtyDefaults:[1], 
-                        weightSelected:0, 
-                        qtyInput:1 
-                    } 
-                })) */
                })
             }
             else if(isMeals(results)){
@@ -132,20 +115,6 @@ const DisplaySearchedFood = ({results, tableKey, saveFoodFunc, addItemBtnText}:P
                             nutrients:nutritionInfo
                         })
                     }))
-                    /* getItemInfoFuncs.push(()=> setSelectedItem({
-                        name:item.mealName,
-                        nutrients,
-                        macros,
-                        key:item.id,
-                        startingWeight:undefined,
-                        serving:{
-                            unit:['Meal'],
-                            servingWeights:undefined,
-                            qtyDefaults:[1],
-                            weightSelected:0,
-                            qtyInput:1
-                        }
-                    })) */
                 })
             }
             else if(isFoods(results)){
@@ -200,7 +169,7 @@ const DisplaySearchedFood = ({results, tableKey, saveFoodFunc, addItemBtnText}:P
 
         const adjustedNutrientValues = Array.isArray(nutrients) ? 
             nutrients.map(nutrient => ({...nutrient, value: nutrient.value* weightRatio * quantityRatio}))
-            : nutrients
+            : new NutritionSumTotal(nutrients, 1/quantityRatio).nutrition
 
         const weight = servingWeights ? 
             servingWeights[weightSelected] * (unit[weightSelected] == 'g' ? qtyInput/100 : qtyInput) 
@@ -279,7 +248,7 @@ const DisplaySearchedFood = ({results, tableKey, saveFoodFunc, addItemBtnText}:P
                     </div>
                     <Label labelName="Serving Size" passedClass="serving-pos gry-outline" labelClass="m4">
                         <div className="flex gap10">
-                            <Input  extraClass="width35" onChange={updateSelectedQty}/>
+                            <Input defaultValue={selectedItem.serving.qtyDefaults[weightSelected]} extraClass="width35" onChange={updateSelectedQty}/>
                             <Dropdown key={selectedItem.name} options={selectedItem.serving.unit} onChangeFunction={(evt) => setSelectedItem(prev => ({...prev, serving:{...prev.serving, weightSelected:evt.target.selectedIndex, qtyInput:prev.serving.qtyDefaults[evt.target.selectedIndex]}}))}/>
                         </div>
                     </Label> 

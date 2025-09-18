@@ -1,6 +1,6 @@
 import { TrackedNutrients, DBEntry, ReturnedDiaryEntry, ReturnedDiaryEntries, LinkedCustomItem, CommonFoodsType } from "./types/types"
 import nutrientIds, {nutrientTables} from "./constants"
-import { isLinkedMeal, isReturnedDiaryEntries, isReturnedDiaryEntry } from "./functions/general-use"
+import { isLinkedMeal, isReturnedDiaryEntries, isReturnedDiaryEntry, isTrackedNutrients } from "./functions/general-use"
 
 import {  isRecipe,isLinkedCustomItem } from "./functions/general-use"
 
@@ -78,7 +78,7 @@ export class NutritionSumTotal{
     }}
     
 //dbData?:ReturnedDiaryEntry | DBEntry[] | ReturnedDiaryEntries
-    constructor(dbData?:ReturnedDiaryEntry  | ReturnedDiaryEntries| undefined| (DBEntry | LinkedCustomItem)[], divisor:number=1){
+    constructor(dbData?:ReturnedDiaryEntry  | ReturnedDiaryEntries| undefined| (DBEntry | LinkedCustomItem)[]|TrackedNutrients, divisor:number=1){
         if(dbData == undefined)
             return
         if(isReturnedDiaryEntry(dbData)){
@@ -87,6 +87,9 @@ export class NutritionSumTotal{
         }
         else if(isReturnedDiaryEntries(dbData)){
             dbData.data.forEach(day => day.data.forEach(entry => this.#handleSavedData(entry, divisor)))
+        }
+        else if(isTrackedNutrients(dbData)){
+            this.#handleTrackedNutrients(dbData, divisor)
         }
          else{
             dbData.forEach(data => this.#handleSavedData(data, divisor))
@@ -161,7 +164,3 @@ export class NutritionSumTotal{
         })
     }
 }
-
-
-
-

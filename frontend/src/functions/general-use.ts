@@ -1,4 +1,4 @@
-import { Nutrients, SavedRecipe, Meals, CustomFood, CustomItem, DBEntrySavedItem, LinkedCustomItem,UserDefinedItems, DiaryEntries, DiaryEntry, DBEntry, CustomItemIndexDB, SavedRecipeDB, SavedFoodDB, SavedMealDB, ReturnedDiaryEntry, ReturnedDiaryEntries, LinkedCustomItems, LinkedMeals, LinkedRecipes } from "../types/types"
+import { Nutrients, SavedRecipe, Meals, CustomFood, CustomItem, DBEntrySavedItem, LinkedCustomItem,UserDefinedItems, DiaryEntries, DiaryEntry, DBEntry, CustomItemIndexDB, SavedRecipeDB, SavedFoodDB, SavedMealDB, ReturnedDiaryEntry, ReturnedDiaryEntries, LinkedCustomItems, LinkedMeals, LinkedRecipes, TrackedNutrients } from "../types/types"
 import { rda, dashboardItems } from "../constants"
 import { addEntryToDB, linkCustomItem, retrieveItemByID } from "./indexdb"
 
@@ -265,4 +265,8 @@ export const generateID = async ():Promise<string> => {
     else 
         return generateID()
     
+}
+
+export function isTrackedNutrients(data:(DBEntry | LinkedCustomItem)[] | TrackedNutrients): data is TrackedNutrients{
+    return 'general' in data
 }
