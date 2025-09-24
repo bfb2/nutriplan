@@ -131,7 +131,7 @@ export class NutritionSumTotal{
                 
             else if(entry !== undefined){
                 const customFood = entry.item
-                this.#handleTrackedNutrients(customFood.nutrients)
+                this.#handleTrackedNutrients(customFood.nutrients, customFood.servingDetails.quantity/(entry.quantity/divisor))
                 /* const nutrientTables = Object.keys(customFood.nutrients) as (keyof TrackedNutrients)[]
                 nutrientTables.forEach(table =>{
                     const nutrients = Object.keys(customFood.nutrients[table]) as Nutrients[]

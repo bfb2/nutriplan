@@ -15,7 +15,7 @@ const DisplayItems = ({items, removeItemFunc, referencedBy}:{items:(DBEntry|Link
             else if(isLinkedMeal(item.item))
                 return [item.item.mealName, item.quantity.toFixed(2), 'Meal', " ", " ", <Cancel onClick={() => deleteItem()} className="pointer"/>]
             else 
-                return [item.item?.foodName, item.quantity.toFixed(2), `${item.item?.servingDetails.quantity} ${item.item?.servingDetails.measure}`, item.item?.servingDetails.grams, " ", <Cancel onClick={() => deleteItem()} className="pointer"/>]
+                return [item.item?.foodName, item.quantity.toFixed(2), item.item?.servingDetails.measure, item.item?.servingDetails.grams*(item.quantity/item.item.servingDetails.quantity), <Cancel onClick={() => deleteItem()} className="pointer"/>]
         }
         else
             return [item.foodName, item.quantity.toFixed(2), item.servingName,  item.weight, <Cancel onClick={() => removeItemFunc(index)} className="pointer"/>]

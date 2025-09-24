@@ -171,9 +171,13 @@ const DisplaySearchedFood = ({results, tableKey, saveFoodFunc, addItemBtnText}:P
             nutrients.map(nutrient => ({...nutrient, value: nutrient.value* weightRatio * quantityRatio}))
             : new NutritionSumTotal(nutrients, 1/quantityRatio).nutrition
 
-        const weight = servingWeights ? 
-            servingWeights[weightSelected] * (unit[weightSelected] == 'g' ? qtyInput/100 : qtyInput) 
-            : undefined
+        let weight
+        if(servingWeights){
+            const weightCalc = servingWeights[weightSelected] * (unit[weightSelected] == 'g' ? qtyInput/100 : quantityRatio)
+            weight = Math.round(weightCalc*10)/10 
+        }
+        else
+            weight = undefined
 
         saveFoodFunc({foodName, nutrients:adjustedNutrientValues, weight, quantity:qtyInput, servingName:unit[weightSelected], key})
     }
