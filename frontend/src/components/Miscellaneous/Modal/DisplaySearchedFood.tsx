@@ -316,16 +316,22 @@ export interface FoodItem{
 }
 
 function isBrandedFirst(data: APIResponseFoods): data is [BrandedFoodsType[], CommonFoodsType[]] {
-    if(data[0].length == 0){
+    if(Array.isArray(data)){
+        if(data[0].length == 0){
         return 'brand_name' in data[1][0]
     }
     return 'brand_name' in data[0][0]
+    }
+    return false
 }
 
 function isAPIResponse(data: ResultsTypes): data is APIResponseFoods{
-     if(Array.isArray(data[0]) && Array.isArray(data[1]))
+    if(Array.isArray(data)){
+        if(Array.isArray(data[0]) && Array.isArray(data[1]))
         return true
     return false  
+    }
+     return false
     
 }
 
