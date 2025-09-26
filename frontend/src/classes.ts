@@ -82,11 +82,10 @@ export class NutritionSumTotal{
         if(dbData == undefined)
             return
         if(isReturnedDiaryEntry(dbData)){
-            dbData.data.forEach(entry => this.#handleSavedData(entry, divisor))
-            
+            this.#processDiaryEntry(dbData, divisor)
         }
         else if(isReturnedDiaryEntries(dbData)){
-            dbData.data.forEach(day => day.data.forEach(entry => this.#handleSavedData(entry, divisor)))
+            dbData.data.forEach(day => this.#processDiaryEntry(day, divisor))
         }
         else if(isTrackedNutrients(dbData)){
             this.#handleTrackedNutrients(dbData, divisor)
@@ -95,6 +94,19 @@ export class NutritionSumTotal{
             dbData.forEach(data => this.#handleSavedData(data, divisor))
         } 
                
+    }
+
+    #processDiaryEntry(diaryEntry:ReturnedDiaryEntry, divisor:number){
+        diaryEntry.data.forEach(entry => {
+                if(isLinkedCustomItem(entry)){
+                    if(isRecipe(entry.item))
+                        this.#handleSavedData(entry, entry.item.servingDetails.servings)
+                    else
+                        this.#handleSavedData(entry, divisor)
+                }
+                else
+                    this.#handleSavedData(entry, divisor)}
+            )
     }
 
     #updateNutrients(nutrient: CommonFoodsType['full_nutrients'][0], divisor:number){
@@ -113,8 +125,8 @@ export class NutritionSumTotal{
             
             if(isRecipe(entry.item)){
                 const recipe = entry.item
-                recipe.ingredients.forEach(ingredient => 
-                    this.#handleSavedData(ingredient, (1/entry.quantity)*divisor))
+                recipe.ingredients.forEach(ingredient => this.#handleSavedData(ingredient, (1/entry.quantity)*divisor))
+                    
                     /* ingredient.nutrients.forEach(nutrient => 
                         this.#updateNutrients(nutrient, recipe.servingDetails.servings/entry.quantity))) */
             }

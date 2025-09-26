@@ -49,7 +49,7 @@ const AddToDiary = ({day, diaryEntries, refreshDiary}:PropsTypes) =>{
                 else if(isLinkedMeal(entry.item))
                     return [<RestaurantMenu style={{color:'#9da0ad'}}/>, entry.item.mealName, entry.quantity, '',<Cancel onClick={() => deleteAndDereference()} className="pointer"/>]
                 else if(entry.item !== undefined)
-                    return [<RestaurantMenu style={{color:'#9da0ad'}}/>, entry.item.foodName, entry.quantity, `${entry.item.servingDetails.quantity} ${entry.item.servingDetails.measure}`, <Cancel onClick={() => deleteAndDereference()} className="pointer"/>]
+                    return [<RestaurantMenu style={{color:'#9da0ad'}}/>, entry.item.foodName, entry.quantity, entry.item.servingDetails.measure, <Cancel onClick={() => deleteAndDereference()} className="pointer"/>]
             }
             else if(entry!== undefined)
                 return [<RestaurantMenu style={{color:'#9da0ad'}}/>, entry.foodName, entry.quantity, entry.servingName, <Cancel onClick={() => removeDiaryItemAndUpdate(index,dateKey,refreshDiary)} className="pointer"/>]
