@@ -30,7 +30,7 @@ export interface BrandedFoodsType{
     serving_weight_grams:number|null
 }
 
-export type APIResponseFoods = [CommonFoodsType[] , BrandedFoodsType[]] | [BrandedFoodsType[], CommonFoodsType[]] 
+export type APIResponseFoods = [CommonFoodsType[] , BrandedFoodsType[]] | [BrandedFoodsType[], CommonFoodsType[]] | {error:string}
 
 export interface ReturnedFoodResponse{
     common:CommonFoodsType[];

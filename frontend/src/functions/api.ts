@@ -10,6 +10,10 @@ export async function processQuery(query:string):Promise<APIResponseFoods> {
         },
     })
     const queryResults: ReturnedFoodResponse = await response.json();
+    if ('message' in queryResults){
+        //"usage limits exceeded"
+        return {error:'API food search limit reached'}
+    }
     const foodItem = queryResults.common?.[0]?.food_name
 
     if(foodItem == query.toLowerCase()){

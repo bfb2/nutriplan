@@ -37,7 +37,10 @@ const DisplaySearchedFood = ({results, tableKey, saveFoodFunc, addItemBtnText}:P
     
     useEffect(()=>{
         setResultData({loading:true, names:[], onClickFuncs:[]})
-        if(results.length == 0 || results == undefined)
+        if ('error' in results){
+            return setResultData({loading:false, onClickFuncs:[], names:[[results.error]]})
+        }
+        else if(results.length == 0 || results == undefined)
             setResultData({loading:false, names:[], onClickFuncs:[]})
         else if(isAPIResponse(results)){
             if(results?.[0]?.length ==0 && results?.[1]?.length == 0)
@@ -61,6 +64,7 @@ const DisplaySearchedFood = ({results, tableKey, saveFoodFunc, addItemBtnText}:P
             return setResultData({loading:false, names:[...firstHalfNames, ...secondHalfNames], onClickFuncs:[...firstHalfOnClickFuncs, ...secondHalfOnClickFuncs]})
         }
         else{
+                        
             const tableContent:[string][]=[], getItemInfoFuncs:Promise<Func>[] = []
             
             if(isRecipes(results)){

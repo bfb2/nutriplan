@@ -114,7 +114,7 @@ export class NutritionSumTotal{
             if(isRecipe(entry.item)){
                 const recipe = entry.item
                 recipe.ingredients.forEach(ingredient => 
-                    this.#handleSavedData(ingredient, (recipe.servingDetails.servings/divisor)))
+                    this.#handleSavedData(ingredient, (1/entry.quantity)*divisor))
                     /* ingredient.nutrients.forEach(nutrient => 
                         this.#updateNutrients(nutrient, recipe.servingDetails.servings/entry.quantity))) */
             }
@@ -122,7 +122,7 @@ export class NutritionSumTotal{
             else if(isLinkedMeal(entry.item)){
                 const meal = entry.item
                 meal.mealItems.forEach(mealItem => {
-                        this.#handleSavedData(mealItem, divisor)
+                        this.#handleSavedData({...mealItem, quantity:mealItem.quantity*entry.quantity}, divisor)
                         /* this.#handleSavedData(mealItem, divisor)
                     else
                         mealItem.nutrients.forEach(nutrient => this.#updateNutrients(nutrient, 1/mealItem.quantity))  */ 
