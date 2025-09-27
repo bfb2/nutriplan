@@ -117,9 +117,9 @@ app.post('/save-custom-item', async (req, res) => {
 
 app.post('/save-diary-entry', (req, res) =>{
     const userName = retrieveUserName(req.signedCookies.auth)
-    const {data,date, username} = req.body
+    const {linkedData,date} = req.body
     mongoDB.updateOne({_id:userName}, {$push:{
-        [`diary.${date}`]:data
+        [`diary.${date}`]:linkedData
     }}, {upsert:true})
 })
 

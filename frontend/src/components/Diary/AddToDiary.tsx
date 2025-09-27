@@ -26,7 +26,7 @@ const AddToDiary = ({day, diaryEntries, refreshDiary}:PropsTypes) =>{
         if(isUserLoggedIn()){
             fetch('https://nutriplan-3n8c.onrender.com/save-diary-entry',{
                 method:'POST',
-                body:JSON.stringify({username:getCookieValue('user'), linkedData, date:dateKey}),
+                body:JSON.stringify({linkedData, date:dateKey}),
                 headers:{"Content-Type": "application/json"},
                 credentials: "include"
             })

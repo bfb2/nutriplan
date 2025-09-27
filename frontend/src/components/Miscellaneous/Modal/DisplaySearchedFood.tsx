@@ -156,17 +156,19 @@ const DisplaySearchedFood = ({results, tableKey, saveFoodFunc, addItemBtnText}:P
     const updateSelectedQty = (evt : React.ChangeEvent<HTMLInputElement>) => {
         const input = evt.target.value
         //const qtyInput = parseFloat(input.value)
-        if(!isNaN(qtyInput))
-            setSelectedItem(prev => ({...prev, serving:{...prev.serving, qtyInput:Number(input)}}))
+        //if(!isNaN(qtyInput))
+            setSelectedItem(prev => ({...prev, serving:{...prev.serving, qtyInput:input}}))
     }
 
     const {macros:{energy, carbohydrates, fat, protein}, serving:{weightSelected, servingWeights, qtyInput, qtyDefaults}, startingWeight} = selectedItem
+    const convertedQtyInput = Number(qtyInput)
+    const validQtyInput = !isNaN(convertedQtyInput)
     const weightRatio = (servingWeights?.[weightSelected] ?? 1) / (startingWeight ?? 1);
-    const quantityRatio = qtyInput / qtyDefaults[weightSelected]
-    const calValue = (energy * weightRatio) * quantityRatio
-    const proteinValue = protein * weightRatio * quantityRatio
-    const carbValue = carbohydrates * weightRatio * quantityRatio
-    const fatValue = fat * weightRatio * quantityRatio
+    const quantityRatio = convertedQtyInput / qtyDefaults[weightSelected]
+    const calValue = validQtyInput ? energy * weightRatio * quantityRatio : 0
+    const proteinValue = validQtyInput ?protein * weightRatio * quantityRatio :0
+    const carbValue = validQtyInput ? carbohydrates * weightRatio * quantityRatio :0
+    const fatValue = validQtyInput ? fat * weightRatio * quantityRatio : 0
 
     const prepareNutritionDataForDB = () => {
         const {name:foodName,nutrients, serving:{qtyInput, weightSelected, servingWeights, unit}, key } = selectedItem
@@ -177,13 +179,14 @@ const DisplaySearchedFood = ({results, tableKey, saveFoodFunc, addItemBtnText}:P
 
         let weight
         if(servingWeights){
-            const weightCalc = servingWeights[weightSelected] * (unit[weightSelected] == 'g' ? qtyInput/100 : quantityRatio)
+            const weightCalc = servingWeights[weightSelected] * (unit[weightSelected] == 'g' ? Number(qtyInput)/100 : quantityRatio)
             weight = Math.round(weightCalc*10)/10 
         }
         else
             weight = undefined
 
-        saveFoodFunc({foodName, nutrients:adjustedNutrientValues, weight, quantity:qtyInput, servingName:unit[weightSelected], key})
+        if(validQtyInput)
+            saveFoodFunc({foodName, nutrients:adjustedNutrientValues, weight, quantity:Number(qtyInput), servingName:unit[weightSelected], key})
     }
     
 
@@ -256,7 +259,7 @@ const DisplaySearchedFood = ({results, tableKey, saveFoodFunc, addItemBtnText}:P
                     </div>
                     <Label labelName="Serving Size" passedClass="serving-pos gry-outline" labelClass="m4">
                         <div className="flex gap10">
-                            <Input defaultValue={selectedItem.serving.qtyDefaults[weightSelected]} extraClass="width35" onChange={updateSelectedQty}/>
+                            <Input value={selectedItem.serving.qtyInput} extraClass="width35" onChange={updateSelectedQty}/>
                             <Dropdown key={selectedItem.name} options={selectedItem.serving.unit} onChangeFunction={(evt) => setSelectedItem(prev => ({...prev, serving:{...prev.serving, weightSelected:evt.target.selectedIndex, qtyInput:prev.serving.qtyDefaults[evt.target.selectedIndex]}}))}/>
                         </div>
                     </Label> 
@@ -310,7 +313,7 @@ export interface FoodItem{
         unit:string[],
         weightSelected:number,
         servingWeights:number[] | undefined;
-        qtyInput: number
+        qtyInput: string|number
     };
 
 }

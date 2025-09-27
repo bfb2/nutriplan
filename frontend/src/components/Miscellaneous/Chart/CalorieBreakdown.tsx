@@ -7,12 +7,10 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const CalorieBreakdown = ({title, nutrition}:PropTypes) =>{
     const {protein, carbs, calories, fat} = nutrition
+    const emptyMacro = calories == 0 || (protein ==0 && carbs == 0 && fat == 0)
 
-    const chartData = calories == 0 || (protein ==0 && carbs == 0 && fat == 0) ? 
-        [1] : [protein*4,carbs*4,fat*9]
-
-    const chartColors = calories == 0 || (protein ==0 && carbs == 0 && fat == 0) ? 
-        ['#e6e6e6'] : ['rgba(68, 203, 123, 1)','rgba(28, 202, 215, 1)','rgba(234, 59, 4, 1)']
+    const chartData = emptyMacro ?  [1] : [protein*4,carbs*4,fat*9]
+    const chartColors = emptyMacro ?  ['#e6e6e6'] : ['rgba(68, 203, 123, 1)','rgba(28, 202, 215, 1)','rgba(234, 59, 4, 1)']
 
         const data:ChartData<'doughnut'> = {
             labels: calories !== 0 ?  ['Protein', 'Carbs', 'Fat'] : [],
@@ -20,7 +18,7 @@ const CalorieBreakdown = ({title, nutrition}:PropTypes) =>{
               {
                 data:chartData ,
                 backgroundColor:chartColors ,
-                borderColor: calories ==0 ||  (protein ==0 && carbs == 0 && fat == 0)? 
+                borderColor: emptyMacro ? 
                   ['rgba(230, 230, 230, 0.2)']
                 :
                 [
