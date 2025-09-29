@@ -2,9 +2,7 @@
 
 const Dropdown = ({options, onChangeFunction,name}:PropTypes) =>{
     return <select name={name} className="dropdown" onChange={onChangeFunction}>
-        {
-            options.map((option, index) => <option key={index}>{option}</option>)
-        }
+        {options.map(option => <option key={option}>{option}</option>)}
     </select>
 } 
 

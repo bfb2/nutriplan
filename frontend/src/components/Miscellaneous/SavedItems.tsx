@@ -78,13 +78,13 @@ interface PropTypes{
 
 const displayItems = (items:CustomItemIndexDB[], getItemsInfo:PropTypes['getItemsInfo'] ) =>{
     if(isSavedRecipe(items))
-        return items.map((item, index) => <TableRow key={index} onClick={()=>getItemsInfo(item.data)} hover={true} 
+        return items.map((item) => <TableRow key={item.data.id} onClick={()=>getItemsInfo(item.data)} hover={true} 
             contents={[item.data.recipeName.trim().length == 0? 'Untitled': item.data.recipeName]} tdClass="saved-items"/>)
     if(isCustomFood(items))
-        return items.map((item, index) => <TableRow key={index} onClick={()=>getItemsInfo(item.data)} hover={true} 
+        return items.map((item) => <TableRow key={item.data.id} onClick={()=>getItemsInfo(item.data)} hover={true} 
             contents={[item.data.foodName.trim().length == 0? 'Untitled': item.data.foodName]} tdClass="saved-items"/>)
     if(isMealItem(items))
-        return items.map((item, index) => <TableRow key={index} onClick={()=>getItemsInfo(item.data)} hover={true} 
+        return items.map(item => <TableRow key={item.data.id} onClick={()=>getItemsInfo(item.data)} hover={true} 
                 contents={[item.data.mealName.trim().length == 0? 'Untitled': item.data.mealName]} tdClass="saved-items"/>)
 }
 
